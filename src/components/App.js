@@ -1,11 +1,22 @@
 import React, {useState} from 'react'
-//import { BrowserRouter as Router, Switch, Route, Link} from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Link} from "react-router-dom";
 
+import LoginPage from '../pages/LoginPage'
 
 export default function App () {
 
     
     return (
-        <h1>Teste</h1>
+
+        <>
+            <Router>
+                <Switch>
+                    <Route path = "/">
+                        <LoginPage />
+                    </Route>
+                </Switch>
+            </Router>
+        </>
+
     );
 }
