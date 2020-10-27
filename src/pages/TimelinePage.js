@@ -29,7 +29,7 @@ export default function TimelinePage () {
 
         request.then( ({data}) => {
             setPostsTimeline(data.posts);
-            console.log("peguei posts")
+            console.log("peguei posts:", data.posts);
             setRequestReturned(true);
         })
         request.catch( ({data}) => {
@@ -38,7 +38,6 @@ export default function TimelinePage () {
         });
     } , [newpostsOcurred]);
 
-    console.log(postsTimeline);
     
     return (
         <>
@@ -53,7 +52,7 @@ export default function TimelinePage () {
                     <NewPost setNewpostsOcurred={setNewpostsOcurred} />
                     {requestReturned === false ? 
                         <img  src = "/images/loading3.gif" className = "loading" /> :
-                        (postsTimeline.length !== 0) ?
+                        (postsTimeline.length === 0) ?
                         <div className = "NoPosts"> 
                             <SiProbot />
                             <span>Nenhum Post encontrado</span>

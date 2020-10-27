@@ -1,7 +1,29 @@
-import React from 'react'
+import React, {useContext, useEffect, useState} from 'react'
 import styled from 'styled-components'
+import axios from 'axios'
+
+import UserContext from '../contexts/UserContext';
 
 export default function Trending () {
+
+    const {userDataObject} = useContext(UserContext);
+    
+    const [hashtags, setHashtags] = useState([]);
+
+    useEffect( () => {
+
+        const request = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v1/linkr/hashtags/trending", { headers: userDataObject.headerToken });
+        //const request = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v1/linkr/hashtags/trending", { headers: {'User-Token': "bcde9953-4288-454c-95d6-f7ae1f0505df"}});
+
+        request.then( ({data}) => {
+            setHashtags(data.hashtags);
+        })
+        request.catch( ({data}) => {
+            alert("Houve uma falha em obter as hashtags. Por favor atualize a página");
+        });
+    } , []);
+
+    console.log("Hastags",hashtags);
     
     return (
         <BoxTrending>
@@ -9,19 +31,13 @@ export default function Trending () {
             trending
         </div>
         <div className="hashtag">   
-           <p># javascript</p> 
-           <p># react</p>
-           <p># react-native</p>
-           <p># material</p>
-           <p># web-dev</p>
-           <p># mobile</p>
+            {hashtags.map( hashtag => <p key = {hashtag.id}>{`# ${hashtag.name}`}</p>)}
         </div>
         
     </BoxTrending>
         
     );
 }
-
 
 const BoxTrending = styled.div ` 
     background: black;
