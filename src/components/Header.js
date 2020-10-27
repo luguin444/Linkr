@@ -1,16 +1,26 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
-import { AiOutlineDown } from "react-icons/ai";
+import { AiOutlineDown, AiOutlineUp } from "react-icons/ai";
+
+import Navegation from './Navegation';
 
 export default function Header () {
     
+    const [openNavegation, setOpenNavegation] = useState(false);
+
+
     return (
         <StyledHeader>
             <Logo> 
                 linkr
             </Logo>
             <User>
-                <AiOutlineDown />
+                {openNavegation ? 
+                    <AiOutlineUp onClick = { () => setOpenNavegation(false) } /> :   
+                    <AiOutlineDown onClick = { () => setOpenNavegation(true)}/>
+                }
+
+                {openNavegation ? <Navegation /> : ''}
                 <img src="https://d26lpennugtm8s.cloudfront.net/stores/861/835/products/dobbt11-d0b3f13551c024bb4415358341779424-640-0.jpg" />
             </User>
         </StyledHeader>
