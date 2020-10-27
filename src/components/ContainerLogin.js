@@ -46,7 +46,8 @@ export default function ContainerLogin () {
                 const request = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v1/linkr/sign_in", data);
     
                 request.then( ({data}) => {
-                    setUserDataObject ({ 'token': data.token, 'user': data.user});
+                    setUserDataObject ({ 'headerToken': {'User-Token': data.token}, 'user': data.user});
+                    setButtonAviability(true);
                     history.push('/timeline');
                 })
                 request.catch( () => {
@@ -75,8 +76,7 @@ export default function ContainerLogin () {
             const request = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v1/linkr/sign_up", Userdata);
 
             request.then( ({data}) => {
-                console.log(data);
-                setUserDataObject ({ 'token': data.token, 'user': data.user});
+                setUserDataObject ({ 'headerToken': {'User-Token': data.token}, 'user': data.user});
                 history.push('/timeline');
 
             })
