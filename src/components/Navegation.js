@@ -8,7 +8,7 @@ export default function Navegation () {
     
     return (
         <StyledNavegation>
-            <div>My posts</div>
+            <Link to = "/my-posts"><div>My posts</div> </Link>
             <div>My likes</div>
             <Link to = "/"> <div>Logout</div> </Link> 
         </StyledNavegation>

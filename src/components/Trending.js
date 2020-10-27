@@ -1,6 +1,7 @@
 import React, {useContext, useEffect, useState} from 'react'
 import styled from 'styled-components'
 import axios from 'axios'
+import {Link} from "react-router-dom";
 
 import UserContext from '../contexts/UserContext';
 
@@ -31,7 +32,7 @@ export default function Trending () {
             trending
         </div>
         <div className="hashtag">   
-            {hashtags.map( hashtag => <p key = {hashtag.id}>{`# ${hashtag.name}`}</p>)}
+            {hashtags.map( hashtag => <Link to = {`/hashtag/${hashtag.name}`}><p key = {hashtag.id}>{`# ${hashtag.name}`}</p></Link> )}
         </div>
         
     </BoxTrending>
