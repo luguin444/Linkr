@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import styled from 'styled-components'
-import { BrowserRouter as Router, Switch, Route, Link} from "react-router-dom";
+import {Link} from "react-router-dom";
 
 
 export default function Navegation () {
@@ -10,7 +10,7 @@ export default function Navegation () {
         <StyledNavegation>
             <div>My posts</div>
             <div>My likes</div>
-            <div>Logout</div>
+            <Link to = "/"> <div>Logout</div> </Link> 
         </StyledNavegation>
     );
 }

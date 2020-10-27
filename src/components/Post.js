@@ -7,7 +7,7 @@ import { Photo } from './NewPost';
 export default function Post (props) {
     
     const {post} = props;
-    console.log(post);
+    //console.log(post);
 
     return (
         <BoxPost>
@@ -23,14 +23,12 @@ export default function Post (props) {
                     {post.text}
                 </div>
                 <div className="link">
-                    <div>
+                    <div className = "infoPost">
                         <div> { post.linkTitle}</div>
-                        {/* <div> { post.linkDescription}</div> */}
-                        {/* <div> { post.link} </div> */}
+                        <div className = "description"> { post.linkDescription}</div>
+                        <div> { post.link} </div>
                     </div>
-                    <div className = "linkImage">
-                        <img src = { post.linkImage}/>
-                    </div>
+                    <img src = { post.linkImage}/>
                 </div>
     
             </PostData>
@@ -41,7 +39,7 @@ export default function Post (props) {
 
 
 const BoxPost = styled.article `
-    height: 17.2rem;
+    height: auto;
     width: 38.2rem;
     background: #171717;
     border-radius: 1rem;
@@ -77,14 +75,45 @@ const PostData = styled.div `
     .link {
         border: 1px solid #4D4D4D;
         border-radius: 0.8rem;
-        height: 9.7rem;
         width: 31rem;
         margin-top: 1rem;
         display: flex;
         justify-content: space-between;
 
+        .infoPost {
+            flex-grow: 1;
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            flex-wrap: wrap;
+            border-top-left-radius: 0.8rem;
+            border-bottom-left-radius: 0.8rem;
+            word-break: break-word;
+
+            & :first-child  {
+                font-size: 1rem;
+                line-height: 1.3rem;
+                margin-bottom: 0.7rem;
+                color: #CECECE;
+            }
+            .description {
+                font-size: 0.7rem;
+                line-height: 0.8rem;
+                margin-bottom: 0.7rem;
+                color: #9b9595;
+            }
+            & :last-child  {
+                font-size: 0.7rem;
+                line-height: 0.8rem;
+                color: #CECECE;
+            }
+        }
+
         img {
+            width: 10rem;
             object-fit: cover;
+            border-top-right-radius: 0.8rem;
+            border-bottom-right-radius: 0.8rem;
         }
     }
 

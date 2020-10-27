@@ -4,7 +4,9 @@ import styled from 'styled-components'
 
 import UserContext from '../contexts/UserContext';
 
-export default function NewPost () {
+export default function NewPost (props) {
+
+    const {setNewpostsOcurred} = props;
 
     const [isPublishing, setIsPublishing] = useState(false);
     const [link, setLink] = useState('');
@@ -32,6 +34,7 @@ export default function NewPost () {
             setIsPublishing(false);
             setLink('');
             setDescription('');
+            setNewpostsOcurred(true);
 
         }) 
         request.catch( (response) => {
