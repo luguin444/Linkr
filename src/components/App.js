@@ -15,11 +15,11 @@ export default function App () {
             <Router>
                 <Switch>
 
-                    <Route exact path = "/timeline">
+                    <Route exact path = "/">
                         <TimelinePage />
                     </Route>
 
-                    <Route exact path = "/">
+                    <Route exact path = "/login">
                         <LoginPage />
                     </Route>
                 </Switch>

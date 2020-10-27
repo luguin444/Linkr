@@ -29,7 +29,7 @@ export default function ContainerLogin () {
 
             const fieldsInBlanckUser = email.length === 0 || password.length === 0 ;
 
-            if ( registered && fieldsInBlanckUser ) {
+            if ( fieldsInBlanckUser ) {
                 alert("É necessário preencher todos os campos!");
                 return;
             }
@@ -38,12 +38,12 @@ export default function ContainerLogin () {
 
                 setButtonAviability(false);
 
-                const data = {
+                const dataUser = {
                     "email": email,
                     "password": password 
                 }
     
-                const request = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v1/linkr/sign_in", data);
+                const request = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v1/linkr/sign_in", dataUser);
     
                 request.then( ({data}) => {
                     setUserDataObject ({ 'headerToken': {'User-Token': data.token}, 'user': data.user});
@@ -57,7 +57,7 @@ export default function ContainerLogin () {
         }  else {
 
             const fieldsInBlanckNewUser = email.length === 0 || password.length === 0 || username.length === 0 || imageURL.length === 0;
-            if ( !registered && fieldsInBlanckNewUser ) {
+            if ( fieldsInBlanckNewUser ) {
                 alert("É necessário preencher todos os campos!");
                 return;
             }
