@@ -1,17 +1,36 @@
-import React, {useContext, useState} from 'react'
+import React, {useContext, useEffect, useState} from 'react'
+import axios from 'axios'
 import styled from 'styled-components'
-import { BrowserRouter as Router, Switch, Route, Link} from "react-router-dom";
 
-
-import UserContext from '../contexts/UserContext';
 import Header from '../components/Header';
 import NewPost from '../components/NewPost';
 import Trending from '../components/Trending';
 import Post from '../components/Post';
 
+import UserContext from '../contexts/UserContext';
+
 
 export default function TimelinePage () {
 
+    const {userDataObject} = useContext(UserContext);
+
+    const [postsTimeline, setPostsTimeline] = useState([]);
+
+    useEffect( () => {
+
+        const request = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v1/linkr/posts?offset=0&limit=2", { headers: userDataObject.headerToken })
+        // const request = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v1/linkr/posts?offset=0&limit=2", { headers: {'User-Token': "bcde9953-4288-454c-95d6-f7ae1f0505df"}});
+
+        request.then( ({data}) => {
+            setPostsTimeline(data.posts);
+            //console.log(data.posts);
+        })
+        request.catch( ({data}) => {
+            alert("Houve uma falha em obter os posts. Por favor atualize a página");
+        });
+    } , [])
+
+    console.log(postsTimeline);
     
     return (
         <>
@@ -24,7 +43,11 @@ export default function TimelinePage () {
             <ContainerPage> 
                 <Posts> 
                     <NewPost />
-                    <Post />  
+                    {postsTimeline.length === 0 ? 
+                        <img  src = "/images/loading3.gif" className = "loading" /> :
+                        postsTimeline.map( post =>  <Post post = {post} key = {post.id} /> )
+                    }
+                    
                 </Posts>
                 <Trending />
                
@@ -60,5 +83,10 @@ const ContainerPage = styled.div`
 
 const Posts = styled.div ` 
     width: 70%; 
+
+    .loading {
+        width: 10rem;
+        margin: 3rem 13rem;
+    }
 `;
 

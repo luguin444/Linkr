@@ -4,23 +4,33 @@ import { Photo } from './NewPost';
 
 
 
-export default function Post () {
+export default function Post (props) {
     
+    const {post} = props;
+    console.log(post);
+
     return (
         <BoxPost>
             <Photo> 
-                <img src="https://d26lpennugtm8s.cloudfront.net/stores/861/835/products/dobbt11-d0b3f13551c024bb4415358341779424-640-0.jpg" />
+                <img src={post.user.avatar}/>
             </Photo>        
 
             <PostData>
                 <div className="name">
-                    Dobby
+                    {post.user.username}
                 </div>
                 <div className="description">
-                    Eu sou um elfo livre! Muito maneiro esse tutorial de Material UI com React, deem uma olhada! #harrypotter #material
+                    {post.text}
                 </div>
                 <div className="link">
-
+                    <div>
+                        <div> { post.linkTitle}</div>
+                        {/* <div> { post.linkDescription}</div> */}
+                        {/* <div> { post.link} </div> */}
+                    </div>
+                    <div className = "linkImage">
+                        <img src = { post.linkImage}/>
+                    </div>
                 </div>
     
             </PostData>
@@ -70,7 +80,12 @@ const PostData = styled.div `
         height: 9.7rem;
         width: 31rem;
         margin-top: 1rem;
+        display: flex;
+        justify-content: space-between;
 
+        img {
+            object-fit: cover;
+        }
     }
 
 `;

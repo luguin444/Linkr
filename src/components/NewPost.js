@@ -1,7 +1,45 @@
-import React from 'react'
+import React, { useState, useContext } from 'react'
+import axios from 'axios'
 import styled from 'styled-components'
 
+import UserContext from '../contexts/UserContext';
+
 export default function NewPost () {
+
+    const [isPublishing, setIsPublishing] = useState(false);
+    const [link, setLink] = useState('');
+    const [description, setDescription] = useState('');
+
+    const {userDataObject} = useContext(UserContext);
+
+    function OnPostPublish() {
+
+        if(link.length === 0) {
+            alert ("O campo link é obrigatório!");
+            return;
+        }
+
+        setIsPublishing(true);
+
+        const PostObject = {
+            'link': link,
+            'text': description
+        }
+
+        const request = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v1/linkr/posts",PostObject, { headers: userDataObject.headerToken } );
+        request.then( (response) => {
+            console.log(response);
+            setIsPublishing(false);
+            setLink('');
+            setDescription('');
+
+        }) 
+        request.catch( (response) => {
+            alert("Houve um erro em publicar seu link");
+            setIsPublishing(false);
+        }) 
+
+    }
     
     return (
         <BoxNewPost>
@@ -11,13 +49,24 @@ export default function NewPost () {
             </Photo>
             <ContainerPost>
                 <h3> O que você tem pra favoritar hoje? </h3>
-                <input placeholder="http://..." ></input>
-                <textarea placeholder="Muito irado esse link falando de #javascript"  rows="4" cols="33"> </textarea>
+                <input 
+                    placeholder="http://..." 
+                    value = {link} 
+                    onChange = { event => setLink(event.target.value)} 
+                    disabled = {isPublishing} 
+                />
+                <textarea 
+                    placeholder="Muito irado esse link falando de #javascript"    
+                    rows="4" cols="33" 
+                    value = {description} 
+                    onChange = { event => setDescription(event.target.value)}
+                    disabled = {isPublishing} 
+                /> 
             </ContainerPost>           
 
         </Info>
         <Publish>
-            <Button> Publish </Button>
+            <Button onClick = { () => OnPostPublish()}> {isPublishing ? "Publishing" : "Publish" } </Button>
         </Publish>
     </BoxNewPost>
         
@@ -102,6 +151,7 @@ const ContainerPost = styled.div `
         background: #EFEFEF;
         border-radius: 0.3rem;
         border: 0;
+        padding-left: 1rem;
 
             &:focus {
             outline:0;

@@ -13,7 +13,7 @@ export default function ContainerLogin () {
 
     const [buttonAviability, setButtonAviability] = useState(true);
 
-    const [registered, setRegistered] = useState(false); // true = log in
+    const [registered, setRegistered] = useState(true); // true = log in
     
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState(''); 
@@ -93,7 +93,7 @@ export default function ContainerLogin () {
         <ContainerGray >
             <StyledContainerLogin>
                 <Input placeholder = "e-mail" value = {email} onChange = { (event) => setEmail(event.target.value)} />
-                <Input placeholder = "password" value = {password} onChange = { (event) => setPassword(event.target.value)} />
+                <Input placeholder = "password" value = {password} onChange = { (event) => setPassword(event.target.value)} type = "password" />
                 {(!registered) && 
                     <>
                         <Input placeholder = "username" value = {username} onChange = { (event) => setUsername(event.target.value)} />
