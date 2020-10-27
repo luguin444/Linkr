@@ -6,9 +6,12 @@ export default UserContext;
 
 export function UserProvider (props) {
 
+    const [userDataObject , setUserDataObject] = useState({});
+
+    console.log(userDataObject);
 
     return (
-        <UserContext.Provider value = {{nome: "testecontext"}}>
+        <UserContext.Provider value = {{userDataObject, setUserDataObject}}>
             {props.children}
         </UserContext.Provider>
     );

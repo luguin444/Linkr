@@ -6,8 +6,8 @@ import UserContext from '../contexts/UserContext'
 
 export default function TimelinePage () {
 
-    const {nome} = useContext(UserContext);
+    
     return (
-        <h1>{nome}</h1>
+        <h1>Teste</h1>
     );
 }

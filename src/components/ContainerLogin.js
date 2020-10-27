@@ -1,11 +1,15 @@
-import React, {useState} from 'react'
+import React, {useState, useContext} from 'react'
 import axios from 'axios'
 import styled from 'styled-components'
 import { useHistory} from "react-router-dom";
 
 import Input from './InputLogin'
 
+import UserContext from '../contexts/UserContext'
+
 export default function ContainerLogin () {
+
+    const {setUserDataObject} = useContext(UserContext);
 
     const [buttonAviability, setButtonAviability] = useState(true);
 
@@ -42,7 +46,7 @@ export default function ContainerLogin () {
                 const request = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v1/linkr/sign_in", data);
     
                 request.then( ({data}) => {
-                    console.log(data);
+                    setUserDataObject ({ 'token': data.token, 'user': data.user});
                     history.push('/timeline');
                 })
                 request.catch( () => {
@@ -61,17 +65,20 @@ export default function ContainerLogin () {
             
             setButtonAviability(false);
 
-            const data = {
+            const Userdata = {
                 "email": email,
                 "password": password, 
                 "username": username, 
                 "pictureUrl": imageURL
             }
 
-            const request = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v1/linkr/sign_up", data);
+            const request = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v1/linkr/sign_up", Userdata);
 
-            request.then( (response) => {
-                console.log(response.data);
+            request.then( ({data}) => {
+                console.log(data);
+                setUserDataObject ({ 'token': data.token, 'user': data.user});
+                history.push('/timeline');
+
             })
             request.catch( () => {
                 setButtonAviability(true);
