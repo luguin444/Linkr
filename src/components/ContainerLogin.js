@@ -1,30 +1,100 @@
 import React, {useState} from 'react'
+import axios from 'axios'
 import styled from 'styled-components'
-import { BrowserRouter as Router, Switch, Route, Link} from "react-router-dom";
+import { useHistory} from "react-router-dom";
 
 import Input from './InputLogin'
 
 export default function ContainerLogin () {
 
-    const [registered, setRegistered] = useState(true); // true = log in
+    const [buttonAviability, setButtonAviability] = useState(true);
+
+    const [registered, setRegistered] = useState(false); // true = log in
+    
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState(''); 
+    const [username, setUsername] = useState(''); 
+    const [imageURL, setImageURL] = useState('');
+
+    const history = useHistory();
+    
 
     function sendDataToServer() {
-        
+
+        if (registered) {
+
+            const fieldsInBlanckUser = email.length === 0 || password.length === 0 ;
+
+            if ( registered && fieldsInBlanckUser ) {
+                alert("É necessário preencher todos os campos!");
+                return;
+            }
+            if (!buttonAviability) 
+                return;
+
+                setButtonAviability(false);
+
+                const data = {
+                    "email": email,
+                    "password": password 
+                }
+    
+                const request = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v1/linkr/sign_in", data);
+    
+                request.then( ({data}) => {
+                    console.log(data);
+                    history.push('/timeline');
+                })
+                request.catch( () => {
+                    setButtonAviability(true);
+                    alert("Email/senha incorretos")
+                })     
+        }  else {
+
+            const fieldsInBlanckNewUser = email.length === 0 || password.length === 0 || username.length === 0 || imageURL.length === 0;
+            if ( !registered && fieldsInBlanckNewUser ) {
+                alert("É necessário preencher todos os campos!");
+                return;
+            }
+            if (!buttonAviability)   return;
+
+            
+            setButtonAviability(false);
+
+            const data = {
+                "email": email,
+                "password": password, 
+                "username": username, 
+                "pictureUrl": imageURL
+            }
+
+            const request = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v1/linkr/sign_up", data);
+
+            request.then( (response) => {
+                console.log(response.data);
+            })
+            request.catch( () => {
+                setButtonAviability(true);
+                alert("Email inserido já está cadastrado");
+            })
+
+        }
+
     }
 
     return (
         <ContainerGray >
             <StyledContainerLogin>
-                <Input placeholder = "e-mail"/>
-                <Input placeholder = "password" />
+                <Input placeholder = "e-mail" value = {email} onChange = { (event) => setEmail(event.target.value)} />
+                <Input placeholder = "password" value = {password} onChange = { (event) => setPassword(event.target.value)} />
                 {(!registered) && 
                     <>
-                        <Input placeholder = "username"/>
-                        <Input placeholder = "picture url"/>
+                        <Input placeholder = "username" value = {username} onChange = { (event) => setUsername(event.target.value)} />
+                        <Input placeholder = "picture url" value = {imageURL} onChange = { (event) => setImageURL(event.target.value)} />
                     </>
                 }
                 <ButtonLogin onClick = { () => sendDataToServer()}>{registered ? "Log in" : "Sign up"}</ButtonLogin>
-                <span> {registered ? "First time ? Create an account!" : "Switch back to log in"} </span>
+                <span onClick = { () => setRegistered(!registered)}> {registered ? "First time ? Create an account!" : "Switch back to log in"} </span>
             </StyledContainerLogin>
          </ContainerGray>
     );
