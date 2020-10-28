@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react'
 import styled from 'styled-components'
 import { AiOutlineDown, AiOutlineUp } from "react-icons/ai";
+import {Link} from "react-router-dom";
 
 import Navegation from './Navegation';
 
@@ -16,7 +17,7 @@ export default function Header () {
     return (
         <StyledHeader>
             <Logo> 
-                linkr
+               <Link to = "/timeline">linkr</Link> 
             </Logo>
             <User>
                 {openNavegation ? 

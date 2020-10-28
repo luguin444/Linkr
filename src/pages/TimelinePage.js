@@ -71,7 +71,7 @@ export default function TimelinePage () {
 }
 
 
-const Main = styled.div ` 
+export const Main = styled.div ` 
     width: 60%;
     margin: auto;
     display: flex;
@@ -79,7 +79,7 @@ const Main = styled.div `
     margin-top: 5rem;
 `;
 
-const Title = styled.h1` 
+export const Title = styled.h1` 
     width: 100%;
     color: white;
     font-family: 'Oswald', sans-serif;
@@ -87,13 +87,13 @@ const Title = styled.h1`
     line-height: 5rem;
 `;
 
-const ContainerPage = styled.div` 
+export const ContainerPage = styled.div` 
     width: 100%;
     display: flex;
 `;
 
 
-const Posts = styled.div ` 
+export const Posts = styled.div ` 
     width: 70%; 
 
     .loading {

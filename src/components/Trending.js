@@ -24,7 +24,7 @@ export default function Trending () {
         });
     } , []);
 
-    console.log("Hastags",hashtags);
+    // console.log("Hastags",hashtags);
     
     return (
         <BoxTrending>

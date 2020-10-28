@@ -5,6 +5,7 @@ import LoginPage from '../pages/LoginPage'
 import TimelinePage from '../pages/TimelinePage'
 import MyPosts from '../pages/MyPosts'
 import Hashtags from '../pages/Hashtags'
+import User from '../pages/User'
 
 import UserContext, {UserProvider} from '../contexts/UserContext'
 
@@ -19,6 +20,10 @@ export default function App () {
 
                     <Route exact path = "/hashtag/:hashtag">
                         <Hashtags />
+                    </Route>
+
+                    <Route exact path = "/user/:id">
+                        <User />
                     </Route>
 
                     <Route exact path = "/my-posts">

@@ -1,7 +1,10 @@
 import React from 'react'
 import styled from 'styled-components'
+import ReactHashtag from "react-hashtag";
+import {Link,useHistory} from "react-router-dom";
+
 import { Photo } from './NewPost';
-import {Link} from "react-router-dom";
+
 
 
 
@@ -9,8 +12,9 @@ import {Link} from "react-router-dom";
 export default function Post (props) {
     
     const {post} = props;
-    console.log(post);
-    
+
+    const history = useHistory();
+
     
     const openInNewTab = (url) => {
         const newWindow = window.open(url, '_blank', 'noopener,noreferrer')
@@ -31,16 +35,20 @@ export default function Post (props) {
                         {post.user.username}
                     </div>
                 </Link>
-
                 <div className="description">
-                    {post.text}
+                    <ReactHashtag onHashtagClick = {value => history.push(`/hashtag/${value.substr(1)}`)}>
+                        {post.text}
+                    </ReactHashtag> 
                 </div>
                 
                 <div className="link" onClick={() => openInNewTab( `${ post.link }`)}>
                     <div className = "infoPost">
                         <div> { post.linkTitle}</div>
                     
-                        <div className = "description"> { post.linkDescription}</div>
+                        <div className = "description"> 
+                                {`${post.linkDescription}`}                                               
+                        </div> 
+                         
                     
                         <div> { post.link } </div>
                     </div>
@@ -86,6 +94,11 @@ const PostData = styled.div `
         line-height: 1.4rem;
         color: #B7B7B7;
         font-weight: 700;
+
+        span {
+            color: #fff;
+            font-weight: bold;
+        }
     }
 
     .link {
@@ -134,9 +147,4 @@ const PostData = styled.div `
         }
     }
 
-`;
-
-const Hashtag = styled.span`
-    color: white;
-    font-weight: bolder;
 `;
