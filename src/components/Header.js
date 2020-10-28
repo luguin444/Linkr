@@ -1,10 +1,14 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import styled from 'styled-components'
 import { AiOutlineDown, AiOutlineUp } from "react-icons/ai";
 
 import Navegation from './Navegation';
 
+import UserContext from '../contexts/UserContext';
+
 export default function Header () {
+
+    const {userDataObject} = useContext(UserContext);
     
     const [openNavegation, setOpenNavegation] = useState(false);
 
@@ -21,7 +25,7 @@ export default function Header () {
                 }
 
                 {openNavegation ? <Navegation /> : ''}
-                <img src="https://d26lpennugtm8s.cloudfront.net/stores/861/835/products/dobbt11-d0b3f13551c024bb4415358341779424-640-0.jpg" />
+                <img src= {userDataObject.user.avatar} />
             </User>
         </StyledHeader>
         

@@ -1,16 +1,20 @@
-import React, {useState} from 'react'
+import React, {useState, useContext} from 'react'
 import styled from 'styled-components'
 import {Link} from "react-router-dom";
 
+import UserContext from '../contexts/UserContext';
+
 
 export default function Navegation () {
+
+    const {setUserDataObject} = useContext(UserContext);
 
     
     return (
         <StyledNavegation>
             <Link to = "/my-posts"><div>My posts</div> </Link>
             <div>My likes</div>
-            <Link to = "/"> <div>Logout</div> </Link> 
+            <Link to = "/"> <div onClick = { () => setUserDataObject({})}>Logout</div> </Link> 
         </StyledNavegation>
     );
 }

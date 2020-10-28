@@ -48,7 +48,7 @@ export default function NewPost (props) {
         <BoxNewPost>
         <Info>
             <Photo> 
-                <img src="https://d26lpennugtm8s.cloudfront.net/stores/861/835/products/dobbt11-d0b3f13551c024bb4415358341779424-640-0.jpg" />
+                <img src= {userDataObject.user.avatar} />
             </Photo>
             <ContainerPost>
                 <h3> O que você tem pra favoritar hoje? </h3>
@@ -69,7 +69,7 @@ export default function NewPost (props) {
 
         </Info>
         <Publish>
-            <Button onClick = { () => OnPostPublish()}> {isPublishing ? "Publishing" : "Publish" } </Button>
+            <Button onClick = { () => OnPostPublish()}> {isPublishing ? "Publishing..." : "Publish" } </Button>
         </Publish>
     </BoxNewPost>
         

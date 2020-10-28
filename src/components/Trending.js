@@ -32,7 +32,7 @@ export default function Trending () {
             trending
         </div>
         <div className="hashtag">   
-            {hashtags.map( hashtag => <Link to = {`/hashtag/${hashtag.name}`}><p key = {hashtag.id}>{`# ${hashtag.name}`}</p></Link> )}
+            {hashtags.map( hashtag => <Link to = {`/hashtag/${hashtag.name}`} key = {hashtag.id} ><p >{`# ${hashtag.name}`}</p></Link> )}
         </div>
         
     </BoxTrending>
