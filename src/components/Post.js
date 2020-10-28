@@ -1,32 +1,48 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Photo } from './NewPost';
+import {Link} from "react-router-dom";
+
 
 
 
 export default function Post (props) {
     
     const {post} = props;
-    //console.log(post);
+    console.log(post);
+    
+    
+    const openInNewTab = (url) => {
+        const newWindow = window.open(url, '_blank', 'noopener,noreferrer')
+        if (newWindow) newWindow.opener = null
+    }
 
     return (
         <BoxPost>
-            <Photo> 
-                <img src={post.user.avatar}/>
-            </Photo>        
+            <Link to = {`/user/${post.user.id}`} key = {post.user.id}>
+                <Photo> 
+                    <img src={post.user.avatar}/>
+                </Photo>        
+            </Link>
 
             <PostData>
-                <div className="name">
-                    {post.user.username}
-                </div>
+                <Link to = {`/user/${post.user.id}`} key = {post.user.id}>
+                    <div className="name">
+                        {post.user.username}
+                    </div>
+                </Link>
+
                 <div className="description">
                     {post.text}
                 </div>
-                <div className="link">
+                
+                <div className="link" onClick={() => openInNewTab( `${ post.link }`)}>
                     <div className = "infoPost">
                         <div> { post.linkTitle}</div>
+                    
                         <div className = "description"> { post.linkDescription}</div>
-                        <div> { post.link} </div>
+                    
+                        <div> { post.link } </div>
                     </div>
                     <img src = { post.linkImage}/>
                 </div>
@@ -79,6 +95,7 @@ const PostData = styled.div `
         margin-top: 1rem;
         display: flex;
         justify-content: space-between;
+        cursor: pointer;
 
         .infoPost {
             flex-grow: 1;
@@ -117,4 +134,9 @@ const PostData = styled.div `
         }
     }
 
+`;
+
+const Hashtag = styled.span`
+    color: white;
+    font-weight: bolder;
 `;
