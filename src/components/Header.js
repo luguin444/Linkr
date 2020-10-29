@@ -34,6 +34,9 @@ export default function Header () {
 }
 
 const StyledHeader = styled.div `
+    position: fixed;
+    right:0;
+    top:0;
     width: 100vw;
     height: 4.5rem;
     background-color: #151515;

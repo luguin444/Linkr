@@ -102,6 +102,7 @@ export const Photo = styled.div `
     display: flex;
     justify-content: center;
     align-items: flex-start;
+   
 
     img {
         width: 3rem;
@@ -116,6 +117,7 @@ export const Photo = styled.div `
 
         img {
             margin-left: 0;  
+            margin-top: 0.5rem;  
         }
     }
     
