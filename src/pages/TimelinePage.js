@@ -77,6 +77,10 @@ export const Main = styled.div `
     display: flex;
     flex-direction: column;
     margin-top: 5rem;
+
+    @media(max-width: 800px) {
+        margin: 0;
+    }
 `;
 
 export const Title = styled.h1` 
@@ -85,6 +89,17 @@ export const Title = styled.h1`
     font-family: 'Oswald', sans-serif;
     font-size: 2.5rem;
     line-height: 5rem;
+
+    @media(max-width: 800px) {
+        display: flex;
+        justify-content: flex-start;
+        padding: 1rem;
+        margin-top: 5rem;
+        font-size: 2rem;
+        line-height: 2.1rem;
+    }
+
+
 `;
 
 export const ContainerPage = styled.div` 
@@ -114,5 +129,11 @@ export const Posts = styled.div `
         justify-content: space-around;
         font-family: 'Oswald', sans-serif; 
     }
+
+    @media(max-width: 800px) {
+        width: 100%;
+        margin: 0 auto; 
+    }
 `;
+
 

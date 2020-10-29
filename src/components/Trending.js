@@ -69,4 +69,8 @@ const BoxTrending = styled.div `
         font-weight: 700;
     }
 
+    @media(max-width: 800px) {
+        display: none;
+    }
+
 `;

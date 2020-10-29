@@ -72,6 +72,12 @@ const BoxPost = styled.article `
     padding: 1rem;
     font-family: 'Lato', sans-serif;
 
+    @media(max-width: 800px) {
+        width: 100vw;
+        margin-left: 0;
+        border-radius: 0;
+        padding: 0.5rem;
+    }
 `;
 
 
@@ -79,10 +85,11 @@ const PostData = styled.div `
     display: flex;
     flex-direction: column;
     margin-left: 1rem;
+    margin-bottom: 0.4rem;
+    word-break: break-word;
    
 
     .name {
-        
         font-size: 1.15rem;
         line-height: 1.4rem;
         color: #FFF;
@@ -94,6 +101,7 @@ const PostData = styled.div `
         line-height: 1.4rem;
         color: #B7B7B7;
         font-weight: 700;
+        word-break: break-word;
 
         span {
             color: #fff;
@@ -145,6 +153,39 @@ const PostData = styled.div `
             border-top-right-radius: 0.8rem;
             border-bottom-right-radius: 0.8rem;
         }
+    }
+
+    @media(max-width: 800px) {
+
+        .name {
+            font-size: 1rem;
+            line-height: 1.1rem;
+        }
+        .description {
+            font-size: 1rem;
+            line-height: 1.1rem;
+        }
+        
+        .link {
+            width: 100%;
+            /* height: 10rem; */
+
+            .infoPost {
+
+                & :first-child  {
+                    font-size: 0.8rem;
+                    line-height: 0.9rem;
+                    margin-bottom: 0.3rem;
+        
+                }
+                .description {
+                    margin-bottom: 0.3rem;
+                   
+            }
+              
+        }
+
+     }
     }
 
 `;
