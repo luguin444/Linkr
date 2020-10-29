@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import ReactHashtag from "react-hashtag";
-import {Link,useHistory} from "react-router-dom";
+import {Link, useHistory} from "react-router-dom";
 
 import { Photo } from './NewPost';
 
@@ -78,6 +78,7 @@ const BoxPost = styled.article `
         border-radius: 0;
         padding: 0.5rem;
     }
+
 `;
 
 

@@ -1,7 +1,7 @@
 import React, {useContext, useEffect, useState} from 'react'
 import styled from 'styled-components'
 import axios from 'axios'
-import {Link} from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { CgSearch } from "react-icons/cg";
 
 import UserContext from '../contexts/UserContext';
@@ -12,10 +12,13 @@ export default function Trending () {
     
     const [hashtags, setHashtags] = useState([]);
     const [inputHashtag, setInputHashtag] = useState('');
+
+    const history = useHistory();
     
     const handleKeyDown = (event) => {
         if (event.key === 'Enter') {
-            console.log(inputHashtag);
+            history.push(`/hashtag/${inputHashtag}`);
+            setInputHashtag('');
         }
     }
 
