@@ -29,7 +29,11 @@
     "react-hashtag": "^2.1.2",
     "react-icons": "^3.11.0",
     "react-router-dom": "^5.2.0",
+
     "react-transition-group": "^4.4.1",
+
+    "react-tooltip": "^4.2.10",
+
     "styled-components": "^5.2.0",
     "webpack": "^5.2.0",
     "webpack-cli": "^4.1.0",

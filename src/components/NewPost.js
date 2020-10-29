@@ -108,8 +108,6 @@ export const Photo = styled.div `
         width: 3rem;
         border-radius: 50%;
         flex-shrink: 0;
-        margin-left: 1rem;
-
     }
 
     @media(max-width: 800px) {

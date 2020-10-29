@@ -1,12 +1,16 @@
-import React from 'react'
+import React, { useState, useContext } from 'react'
+import axios from 'axios'
 import styled from 'styled-components'
 import ReactHashtag from "react-hashtag";
-import {Link, useHistory} from "react-router-dom";
+import {Link,useHistory} from "react-router-dom";
+import { HiOutlineHeart} from "react-icons/hi"; //vazio cheio
+import { IoMdHeart} from "react-icons/io"; //vazio cheio
+
 
 import { Photo } from './NewPost';
 
 
-
+import UserContext from '../contexts/UserContext';
 
 
 export default function Post (props) {
@@ -15,20 +19,76 @@ export default function Post (props) {
 
     const history = useHistory();
 
-    
+    const {userDataObject} = useContext(UserContext);
+
+    const [liked, setliked] = useState(isLikedPost(userDataObject));
+    const [likesFromPost, setLikesFromPost] = useState([]);
+    const [haveILikedOrDisliked, setHaveILikedOrDisliked] = useState(false);
+
+
     const openInNewTab = (url) => {
         const newWindow = window.open(url, '_blank', 'noopener,noreferrer')
         if (newWindow) newWindow.opener = null
     }
 
+    function isLikedPost(userDataObject) {
+        return post.likes.find(item => {
+            if(item.createdAt)
+                return item.userId === userDataObject.user.id; //caso venha da timeline
+            else
+                return item.id === userDataObject.user.id;  //caso venha dos my-post e my-likes
+        });
+    }
+
+    function likePost() {
+        
+        setliked(true);
+        setHaveILikedOrDisliked(true);
+        const request = axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v1/linkr/posts/${post.id}/like`, {}, { headers: userDataObject.headerToken });
+
+        request.then(({data}) => {
+            setLikesFromPost(data.post.likes);
+        });
+    }
+
+    function dislikePost() {
+        
+        setliked(false);
+        setHaveILikedOrDisliked(true);
+        const request = axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v1/linkr/posts/${post.id}/dislike`, {}, { headers: userDataObject.headerToken });
+
+        request.then(({data}) => {
+            setLikesFromPost(data.post.likes);
+        });
+    }
+
+    function UserWhoLiked () {
+
+        if (haveILikedOrDisliked) {
+            const UsernamesLiked = likesFromPost.map(item => item.username);
+            console.log(UsernamesLiked);
+        } else {
+            const UsernamesLiked = post.likes.map(item => item['user.username']);
+            console.log(UsernamesLiked);
+        }
+
+
+
+    }
+
     return (
         <BoxPost>
-            <Link to = {`/user/${post.user.id}`} key = {post.user.id}>
+            <LateralContainer>
                 <Photo> 
-                    <img src={post.user.avatar}/>
-                </Photo>        
-            </Link>
-
+                        <img src={post.user.avatar} onClick = { () => history.push(`/user/${post.user.id}`) }/>
+                 </Photo>
+                 {liked ? 
+                    <IoMdHeart className  = "icon red" onClick = { () => dislikePost()} /> : 
+                    <HiOutlineHeart className  = "icon white" onClick = { () => likePost()} /> 
+                }
+                <span onClick = {() => UserWhoLiked()}>{ `${haveILikedOrDisliked ? likesFromPost.length : post.likes.length} likes` }</span>  
+            </LateralContainer>
+            
             <PostData>
                 <Link to = {`/user/${post.user.id}`} key = {post.user.id}>
                     <div className="name">
@@ -81,6 +141,29 @@ const BoxPost = styled.article `
 
 `;
 
+const LateralContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .icon {
+        margin-top: 1rem;
+        font-size: 1.6rem;
+    }
+
+    .red {
+        color: red;
+    }
+    .white {
+        color: #fff;
+    }
+
+    span {
+        color: #fff;
+        margin-top: 0.35rem;
+        font-size: 0.8rem;
+    }
+`
 
 const PostData = styled.div `
     display: flex;

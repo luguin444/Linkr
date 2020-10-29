@@ -77,7 +77,7 @@ export const Main = styled.div `
     display: flex;
     flex-direction: column;
     margin-top: 5rem;
-
+    
     @media(max-width: 800px) {
         margin: 0;
     }

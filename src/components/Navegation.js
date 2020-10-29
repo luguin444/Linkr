@@ -12,8 +12,8 @@ export default function Navegation () {
     
     return (
         <StyledNavegation>
-            <Link to = "/my-posts"><div>My posts</div> </Link>
-            <div>My likes</div>
+            <Link to = "/my-posts"> <div>My posts</div> </Link>
+            <Link to = "/my-likes"> <div>My likes</div> </Link>
             <Link to = "/"> <div onClick = { () => setUserDataObject({})}>Logout</div> </Link> 
         </StyledNavegation>
     );
