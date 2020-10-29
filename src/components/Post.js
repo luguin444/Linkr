@@ -78,7 +78,6 @@ const BoxPost = styled.article `
         border-radius: 0;
         padding: 0.5rem;
     }
-
 `;
 
 

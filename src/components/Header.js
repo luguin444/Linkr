@@ -34,18 +34,17 @@ export default function Header () {
 }
 
 const StyledHeader = styled.div `
+    
     position: fixed;
-    right:0;
-    top:0;
-    width: 100vw;
+    right: 0;
+    top :0;
+    width: 100%;
     height: 4.5rem;
     background-color: #151515;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 2rem 0 2rem; 
-
-
+    padding: 0 2rem 0 2rem;  
 `;
 
 const Logo = styled.div `
@@ -72,6 +71,4 @@ const User = styled.div `
         width: 3rem;
         border-radius: 50%;
     }
-
-    
 `;
