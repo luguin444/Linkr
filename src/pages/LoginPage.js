@@ -24,13 +24,19 @@ export default function LoginPage () {
 
 const ContainerAll = styled.div`
     width: 100%;
-    min-height: 100vh;
+    height: 100vh;
     display: flex;
+
+     @media(max-width: 800px) {
+        flex-direction: column;
+    }
+
+    
 `
 
 const ContainerLogo = styled.div`
     width: 65%;
-    min-height: 100vh;
+    height: 100vh;
     background-color: black;
     color: #fff;
     font-weight: 700;
@@ -48,6 +54,26 @@ const ContainerLogo = styled.div`
         font-family: 'Oswald', sans-serif;
         font-size: 3rem;
         line-height: 4.2rem
+    }
+
+
+     @media(max-width: 800px) {
+        width: 100%;
+        height: 15rem;
+        padding: 1rem;
+        text-align: center;
+
+         h1 {
+            font-size: 6rem;
+        }
+
+        p {
+            font-size: 1.5rem;
+            line-height: 2.8rem;
+            
+        }
+
+        
     }
     
 `
