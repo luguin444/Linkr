@@ -20,7 +20,8 @@ const Input = styled.input`
     }
     &:focus {
         outline:0;
-    }
+    }   
 
-`
+`;
+
 export default Input

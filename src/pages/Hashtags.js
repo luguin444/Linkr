@@ -12,7 +12,7 @@ import {Title, Main, ContainerPage, Posts} from './TimelinePage'
 import UserContext from '../contexts/UserContext';
 
 
-export default function User () {
+export default function Hashtags () {
 
     const {userDataObject} = useContext(UserContext);
 

@@ -169,7 +169,13 @@ const PostData = styled.div `
         
         .link {
             width: 100%;
-            /* height: 10rem; */
+
+            img {
+                width: 7rem;
+                /* object-fit: initial; */
+                
+            }
+            
 
             .infoPost {
 

@@ -109,13 +109,16 @@ export default function ContainerLogin () {
 
 const ContainerGray = styled.div`
     width: 35%;
-    min-height: 100vh;
     background-color: #333;
-    padding: 15rem 0 0 0;    
+    padding: 15rem 0 0 0; 
+
+        @media(max-width: 800px) {
+            width: 100%;
+            padding: 2rem 0 0 0; 
+        }   
 `
 
 const StyledContainerLogin = styled.ul`
-
     display: flex;
     justify-content: center;
     align-items: center;
@@ -130,7 +133,8 @@ const StyledContainerLogin = styled.ul`
         color: #fff;
         text-decoration: underline;
     }
-`
+
+`;
 
 const ButtonLogin = styled.button`
     width: 80%;
@@ -146,5 +150,5 @@ const ButtonLogin = styled.button`
     align-items: center;
     justify-content: center;
     font-size: 2rem;
-`
+`;
 
