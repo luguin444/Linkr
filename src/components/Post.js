@@ -72,6 +72,13 @@ const BoxPost = styled.article `
     padding: 1rem;
     font-family: 'Lato', sans-serif;
 
+    @media(max-width: 800px) {
+        width: 100vw;
+        margin-left: 0;
+        border-radius: 0;
+        padding: 0.5rem;
+    }
+
 `;
 
 
@@ -144,6 +151,14 @@ const PostData = styled.div `
             object-fit: cover;
             border-top-right-radius: 0.8rem;
             border-bottom-right-radius: 0.8rem;
+        }
+    }
+
+    @media(max-width: 800px) {
+        
+        .link {
+            width: 100%;
+              
         }
     }
 

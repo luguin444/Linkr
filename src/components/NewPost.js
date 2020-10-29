@@ -81,12 +81,19 @@ const BoxNewPost = styled.div `
     background: white;
     padding: 1rem;
     border-radius: 1rem;
-    
+
+    @media(max-width: 800px) {
+        width: 100vw;
+        margin-left: 0;
+        border-radius: 0;
+        padding: 0.5rem;
+    }
 `;
 
 const Info = styled.div `
     width: 100%;
     display: flex;
+
     
 
 `;
@@ -102,6 +109,14 @@ export const Photo = styled.div `
         flex-shrink: 0;
         margin-left: 1rem;
 
+    }
+
+    @media(max-width: 800px) {
+        width: 5rem;
+
+        img {
+            margin-left: 0;  
+        }
     }
     
 
@@ -160,5 +175,11 @@ const ContainerPost = styled.div `
             outline:0;
         }
 
+    }
+
+
+    @media(max-width: 800px) {
+        width: 100%; 
+        margin-left: 0;      
     }
 `;

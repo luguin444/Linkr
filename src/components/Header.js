@@ -34,13 +34,14 @@ export default function Header () {
 }
 
 const StyledHeader = styled.div `
-    width: 100%;
+    width: 100vw;
     height: 4.5rem;
     background-color: #151515;
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 0 2rem 0 2rem; 
+
 
 `;
 
