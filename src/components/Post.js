@@ -5,6 +5,7 @@ import ReactHashtag from "react-hashtag";
 import {Link,useHistory} from "react-router-dom";
 import { HiOutlineHeart} from "react-icons/hi"; //vazio cheio
 import { IoMdHeart} from "react-icons/io"; //vazio cheio
+import ReactTooltip from 'react-tooltip';
 
 
 import { Photo } from './NewPost';
@@ -22,7 +23,7 @@ export default function Post (props) {
     const {userDataObject} = useContext(UserContext);
 
     const [liked, setliked] = useState(isLikedPost(userDataObject));
-    const [likesFromPost, setLikesFromPost] = useState([]);
+    const [likesFromPost, setLikesFromPost] = useState(post.likes);
     const [haveILikedOrDisliked, setHaveILikedOrDisliked] = useState(false);
 
 
@@ -43,10 +44,10 @@ export default function Post (props) {
     function likePost() {
         
         setliked(true);
-        setHaveILikedOrDisliked(true);
         const request = axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v1/linkr/posts/${post.id}/like`, {}, { headers: userDataObject.headerToken });
 
         request.then(({data}) => {
+            setHaveILikedOrDisliked(true);
             setLikesFromPost(data.post.likes);
         });
     }
@@ -54,26 +55,48 @@ export default function Post (props) {
     function dislikePost() {
         
         setliked(false);
-        setHaveILikedOrDisliked(true);
         const request = axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v1/linkr/posts/${post.id}/dislike`, {}, { headers: userDataObject.headerToken });
 
         request.then(({data}) => {
+            setHaveILikedOrDisliked(true);
             setLikesFromPost(data.post.likes);
         });
     }
 
-    function UserWhoLiked () {
+    function userWhoLiked () {
+      
+        let userNamesLiked = [];
+        let stringTooltip = ``;
 
-        if (haveILikedOrDisliked) {
-            const UsernamesLiked = likesFromPost.map(item => item.username);
-            console.log(UsernamesLiked);
+        if (liked) {
+        
+            userNamesLiked = haveILikedOrDisliked ? likesFromPost.map(item => item.username) : post.likes.map(item => item['user.username']);
+            userNamesLiked = userNamesLiked.filter( item => item !== userDataObject.user.username);
+
+            if (userNamesLiked.length === 0) {
+                stringTooltip = `Você deu like`
+            } else if (userNamesLiked.length === 1) {
+                stringTooltip = `Você e ${userNamesLiked[0]} curtiram`
+            } else {
+                stringTooltip = `Você, ${userNamesLiked[0]} e outra ${userNamesLiked.length -1} pessoa `
+            }
+
+            
+
         } else {
-            const UsernamesLiked = post.likes.map(item => item['user.username']);
-            console.log(UsernamesLiked);
+            userNamesLiked = post.likes.map(item => item['user.username']);
+            if (userNamesLiked.length === 0) {
+                stringTooltip = `0 likes`
+            } else if (userNamesLiked.length === 1) {
+                stringTooltip = `${userNamesLiked[0]} curtiu `
+            } else if (userNamesLiked.length === 2) {
+                stringTooltip = `${userNamesLiked[0]}, ${userNamesLiked[1]} curtiram`
+            } else {
+                stringTooltip = `${userNamesLiked[0]}, ${userNamesLiked[1]} e outras ${userNamesLiked.length -2} pessoas`
+            }               
         }
 
-
-
+        return stringTooltip;
     }
 
     return (
@@ -86,7 +109,17 @@ export default function Post (props) {
                     <IoMdHeart className  = "icon red" onClick = { () => dislikePost()} /> : 
                     <HiOutlineHeart className  = "icon white" onClick = { () => likePost()} /> 
                 }
-                <span onClick = {() => UserWhoLiked()}>{ `${haveILikedOrDisliked ? likesFromPost.length : post.likes.length} likes` }</span>  
+                <>
+                    <span 
+                        onClick = {() => userWhoLiked()}
+                        data-tip = {userWhoLiked()}
+                        onMouseOver = { () => {ReactTooltip.show()}}  
+                    >
+                        { `${haveILikedOrDisliked ? likesFromPost.length : post.likes.length} likes` }
+                    </span>  
+                    <ReactTooltip place = "bottom" type = "light" effect = "float"/>
+                </>
+                       
             </LateralContainer>
             
             <PostData>
@@ -107,9 +140,7 @@ export default function Post (props) {
                     
                         <div className = "description"> 
                                 {`${post.linkDescription}`}                                               
-                        </div> 
-                         
-                    
+                        </div>                    
                         <div> { post.link } </div>
                     </div>
                     <img src = { post.linkImage}/>

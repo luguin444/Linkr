@@ -114,6 +114,7 @@ export const Posts = styled.div `
     .loading {
         width: 10rem;
         margin: 3rem 13rem;
+
     }
 
     .NoPosts {
@@ -133,6 +134,11 @@ export const Posts = styled.div `
     @media(max-width: 800px) {
         width: 100%;
         margin: 0 auto; 
+
+        .loading {
+            margin: 3rem 7rem;
+        }
+
     }
 `;
 

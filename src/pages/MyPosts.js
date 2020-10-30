@@ -41,22 +41,21 @@ export default function MyPosts () {
                 <Title>
                     my posts  
                 </Title>
-            <ContainerPage> 
-                <Posts> 
-                    { requestReturned === false ? 
-                         <img  src = "/images/loading3.gif" className = "loading" /> :
-                         (myPosts.length === 0) ?
-                             <div className = "NoPosts"> 
-                                <SiProbot />
-                                <span>Nenhum Post encontrado</span>
-                            </div> :
-                            myPosts.map( post =>  <Post post = {post} key = {post.id} /> )
-                    } 
-                    
-                </Posts>
-                <Trending />            
-            </ContainerPage>          
-        </Main>
+                <ContainerPage> 
+                    <Posts> 
+                        { requestReturned === false ? 
+                            <img  src = "/images/loading3.gif" className = "loading" /> :
+                            (myPosts.length === 0) ?
+                                <div className = "NoPosts"> 
+                                    <SiProbot />
+                                    <span>Nenhum Post encontrado</span>
+                                </div> :
+                                myPosts.map( post =>  <Post post = {post} key = {post.id} /> )
+                        }                    
+                    </Posts>
+                    <Trending />            
+                </ContainerPage>          
+            </Main>
         </>
     );
 }
