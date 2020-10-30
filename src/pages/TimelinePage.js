@@ -47,7 +47,7 @@ export default function TimelinePage () {
                 <Posts> 
                     <NewPost setNewpostsOcurred={setNewpostsOcurred} />
                     {requestReturned === false ? 
-                        <img  src = "/images/loading3.gif" className = "loading" /> :
+                        <img  src = "../../images/loading3.gif" className = "loading" /> :
                         (postsTimeline.length === 0) ?
                         <div className = "NoPosts"> 
                             <SiProbot />
