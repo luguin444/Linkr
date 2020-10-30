@@ -27,10 +27,8 @@ export default function Hashtags () {
 
         request.then( ({data}) => {
             setHashtagPosts(data.posts);
-            console.log("peguei posts da hashtag:", data.posts);
             setRequestReturned(true);
         })
-
         request.catch( () => {
             alert("Houve uma falha em obter os posts do hashtag. Por favor atualize a página");
             setRequestReturned(true);
@@ -44,21 +42,21 @@ export default function Hashtags () {
                 <Title>
                     {`#${hashtag}`}
                 </Title>
-            <ContainerPage> 
-                <Posts> 
-                    { requestReturned === false ? 
-                         <img  src = "/images/loading3.gif" className = "loading" /> :
-                         (hashtagPosts.length === 0) ?
-                             <div className = "NoPosts"> 
-                                <SiProbot />
-                                <span>Nenhum Post encontrado</span>
-                            </div> :
-                            hashtagPosts.map( post =>  <Post post = {post} key = {post.id} /> )
-                    }                   
-                </Posts>
-                <Trending />            
-            </ContainerPage>          
-        </Main>
+                <ContainerPage> 
+                    <Posts> 
+                        { requestReturned === false ? 
+                            <img  src = "/images/loading3.gif" className = "loading" /> :
+                            (hashtagPosts.length === 0) ?
+                                <div className = "NoPosts"> 
+                                    <SiProbot />
+                                    <span>Nenhum Post encontrado</span>
+                                </div> :
+                                hashtagPosts.map( post =>  <Post post = {post} key = {post.id} /> )
+                        }                   
+                    </Posts>
+                    <Trending />            
+                </ContainerPage>          
+            </Main>
         </>
     );
 }

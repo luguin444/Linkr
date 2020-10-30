@@ -7,12 +7,9 @@ import { HiOutlineHeart} from "react-icons/hi"; //vazio cheio
 import { IoMdHeart} from "react-icons/io"; //vazio cheio
 import ReactTooltip from 'react-tooltip';
 
-
 import { Photo } from './NewPost';
 
-
 import UserContext from '../contexts/UserContext';
-
 
 export default function Post (props) {
     
@@ -25,7 +22,6 @@ export default function Post (props) {
     const [liked, setliked] = useState(isLikedPost(userDataObject));
     const [likesFromPost, setLikesFromPost] = useState(post.likes);
     const [haveILikedOrDisliked, setHaveILikedOrDisliked] = useState(false);
-
 
     const openInNewTab = (url) => {
         const newWindow = window.open(url, '_blank', 'noopener,noreferrer')
@@ -41,8 +37,7 @@ export default function Post (props) {
         });
     }
 
-    function likePost() {
-        
+    function likePost() {      
         setliked(true);
         const request = axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v1/linkr/posts/${post.id}/like`, {}, { headers: userDataObject.headerToken });
 
@@ -52,8 +47,7 @@ export default function Post (props) {
         });
     }
 
-    function dislikePost() {
-        
+    function dislikePost() {      
         setliked(false);
         const request = axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v1/linkr/posts/${post.id}/dislike`, {}, { headers: userDataObject.headerToken });
 
@@ -68,8 +62,7 @@ export default function Post (props) {
         let userNamesLiked = [];
         let stringTooltip = ``;
 
-        if (liked) {
-        
+        if (liked) {       
             userNamesLiked = haveILikedOrDisliked ? likesFromPost.map(item => item.username) : post.likes.map(item => item['user.username']);
             userNamesLiked = userNamesLiked.filter( item => item !== userDataObject.user.username);
 
@@ -80,9 +73,6 @@ export default function Post (props) {
             } else {
                 stringTooltip = `Você, ${userNamesLiked[0]} e outra ${userNamesLiked.length -1} pessoa `
             }
-
-            
-
         } else {
             userNamesLiked = post.likes.map(item => item['user.username']);
             if (userNamesLiked.length === 0) {
@@ -95,10 +85,8 @@ export default function Post (props) {
                 stringTooltip = `${userNamesLiked[0]}, ${userNamesLiked[1]} e outras ${userNamesLiked.length -2} pessoas`
             }               
         }
-
         return stringTooltip;
     }
-
     return (
         <BoxPost>
             <LateralContainer>
@@ -118,10 +106,8 @@ export default function Post (props) {
                         { `${haveILikedOrDisliked ? likesFromPost.length : post.likes.length} likes` }
                     </span>  
                     <ReactTooltip place = "bottom" type = "light" effect = "float"/>
-                </>
-                       
-            </LateralContainer>
-            
+                </>                      
+            </LateralContainer>           
             <PostData>
                 <Link to = {`/user/${post.user.id}`} key = {post.user.id}>
                     <div className="name">
@@ -132,8 +118,7 @@ export default function Post (props) {
                     <ReactHashtag onHashtagClick = {value => history.push(`/hashtag/${value.substr(1)}`)}>
                         {post.text}
                     </ReactHashtag> 
-                </div>
-                
+                </div>             
                 <div className="link" onClick={() => openInNewTab( `${ post.link }`)}>
                     <div className = "infoPost">
                         <div> { post.linkTitle}</div>
@@ -144,14 +129,11 @@ export default function Post (props) {
                         <div> { post.link } </div>
                     </div>
                     <img src = { post.linkImage}/>
-                </div>
-    
+                </div>   
             </PostData>
-    </BoxPost>
-        
+    </BoxPost>      
     );
 }
-
 
 const BoxPost = styled.article `
     height: auto;
@@ -181,14 +163,12 @@ const LateralContainer = styled.div`
         margin-top: 1rem;
         font-size: 1.6rem;
     }
-
     .red {
         color: red;
     }
     .white {
         color: #fff;
     }
-
     span {
         color: #fff;
         margin-top: 0.35rem;
@@ -203,13 +183,11 @@ const PostData = styled.div `
     margin-bottom: 0.4rem;
     word-break: break-word;
    
-
     .name {
         font-size: 1.15rem;
         line-height: 1.4rem;
         color: #FFF;
     }
-
     .description {
         margin-top: 0.5rem;
         font-size: 1.15rem;
@@ -223,7 +201,6 @@ const PostData = styled.div `
             font-weight: bold;
         }
     }
-
     .link {
         border: 1px solid #4D4D4D;
         border-radius: 0.8rem;
@@ -261,7 +238,6 @@ const PostData = styled.div `
                 color: #CECECE;
             }
         }
-
         img {
             width: 10rem;
             object-fit: cover;
@@ -279,34 +255,23 @@ const PostData = styled.div `
         .description {
             font-size: 1rem;
             line-height: 1.1rem;
-        }
-        
+        }      
         .link {
             width: 100%;
 
             img {
-                width: 7rem;
-                /* object-fit: initial; */
-                
+                width: 7rem;                
             }
-            
-
             .infoPost {
-
                 & :first-child  {
                     font-size: 0.8rem;
                     line-height: 0.9rem;
-                    margin-bottom: 0.3rem;
-        
+                    margin-bottom: 0.3rem;      
                 }
                 .description {
-                    margin-bottom: 0.3rem;
-                   
+                    margin-bottom: 0.3rem;                
+                }             
             }
-              
-        }
-
-     }
+         }
     }
-
 `;

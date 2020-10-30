@@ -3,10 +3,7 @@ import styled from 'styled-components'
 
 import ContainerLogin from '../components/ContainerLogin'
 
-
-export default function LoginPage () {
-
-    
+export default function LoginPage () {   
     return (
         <>
             <ContainerAll>
@@ -29,9 +26,7 @@ const ContainerAll = styled.div`
 
      @media(max-width: 800px) {
         flex-direction: column;
-    }
-
-    
+    }  
 `
 
 const ContainerLogo = styled.div`
@@ -49,13 +44,11 @@ const ContainerLogo = styled.div`
         font-size: 8rem;
         letter-spacing: 0.3rem;
     }
-
     p {
         font-family: 'Oswald', sans-serif;
         font-size: 3rem;
         line-height: 4.2rem
     }
-
 
      @media(max-width: 800px) {
         width: 100%;
@@ -63,18 +56,13 @@ const ContainerLogo = styled.div`
         padding: 1rem;
         text-align: center;
 
-         h1 {
+        h1 {
             font-size: 6rem;
         }
-
         p {
             font-size: 1.5rem;
             line-height: 2.8rem;
             
-        }
-
-        
-    }
-    
+        }      
+    }    
 `
-

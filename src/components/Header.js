@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react'
 import styled from 'styled-components'
-import { AiOutlineDown, AiOutlineUp } from "react-icons/ai";
+import {AiOutlineDown, AiOutlineUp } from "react-icons/ai";
 import {Link} from "react-router-dom";
 
 import Navegation from './Navegation';
@@ -13,7 +13,6 @@ export default function Header () {
     
     const [openNavegation, setOpenNavegation] = useState(false);
 
-
     return (
         <StyledHeader>
             <Logo> 
@@ -24,12 +23,10 @@ export default function Header () {
                     <AiOutlineUp onClick = { () => setOpenNavegation(false) } /> :   
                     <AiOutlineDown onClick = { () => setOpenNavegation(true)}/>
                 }
-
                 {openNavegation ? <Navegation /> : ''}
                 <img src= {userDataObject.user.avatar} />
             </User>
-        </StyledHeader>
-        
+        </StyledHeader>       
     );
 }
 
@@ -54,8 +51,6 @@ const Logo = styled.div `
     font-family: 'Passion One', cursive;
     font-weight: 700;
     letter-spacing: 0.05rem;
-    
-
 `;
 
 const User = styled.div `

@@ -28,51 +28,47 @@ export default function NewPost (props) {
             'text': description
         }
 
-        const request = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v1/linkr/posts",PostObject, { headers: userDataObject.headerToken } );
+        const request = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v1/linkr/posts",PostObject, { headers: userDataObject.headerToken });
+
         request.then( (response) => {
             console.log(response);
             setIsPublishing(false);
             setLink('');
             setDescription('');
             setNewpostsOcurred(true);
-
         }) 
         request.catch( (response) => {
             alert("Houve um erro em publicar seu link");
             setIsPublishing(false);
         }) 
-
-    }
-    
+    }   
     return (
         <BoxNewPost>
-        <Info>
-            <Photo> 
-                <img src= {userDataObject.user.avatar} />
-            </Photo>
-            <ContainerPost>
-                <h3> O que você tem pra favoritar hoje? </h3>
-                <input 
-                    placeholder="http://..." 
-                    value = {link} 
-                    onChange = { event => setLink(event.target.value)} 
-                    disabled = {isPublishing} 
-                />
-                <textarea 
-                    placeholder="Muito irado esse link falando de #javascript"    
-                    rows="4" cols="33" 
-                    value = {description} 
-                    onChange = { event => setDescription(event.target.value)}
-                    disabled = {isPublishing} 
-                /> 
-            </ContainerPost>           
-
-        </Info>
-        <Publish>
-            <Button onClick = { () => OnPostPublish()}> {isPublishing ? "Publishing..." : "Publish" } </Button>
-        </Publish>
-    </BoxNewPost>
-        
+            <Info>
+                <Photo> 
+                    <img src= {userDataObject.user.avatar} />
+                </Photo>
+                <ContainerPost>
+                    <h3> O que você tem pra favoritar hoje? </h3>
+                    <input 
+                        placeholder="http://..." 
+                        value = {link} 
+                        onChange = { event => setLink(event.target.value)} 
+                        disabled = {isPublishing} 
+                    />
+                    <textarea 
+                        placeholder="Muito irado esse link falando de #javascript"    
+                        rows="4" cols="33" 
+                        value = {description} 
+                        onChange = { event => setDescription(event.target.value)}
+                        disabled = {isPublishing} 
+                    /> 
+                </ContainerPost>           
+            </Info>
+            <Publish>
+                <Button onClick = { () => OnPostPublish()}> {isPublishing ? "Publishing..." : "Publish" } </Button>
+            </Publish>
+         </BoxNewPost>    
     );
 }
 
@@ -93,9 +89,6 @@ const BoxNewPost = styled.div `
 const Info = styled.div `
     width: 100%;
     display: flex;
-
-    
-
 `;
 
 export const Photo = styled.div `
@@ -103,7 +96,6 @@ export const Photo = styled.div `
     justify-content: center;
     align-items: flex-start;
    
-
     img {
         width: 3rem;
         border-radius: 50%;
@@ -118,15 +110,12 @@ export const Photo = styled.div `
             margin-top: 0.5rem;  
         }
     }
-    
-
 `;
 
 const Publish = styled.div `
     width: 100%;
     display: flex;
     justify-content: flex-end;
-
 `;
 
 const Button = styled.button `
@@ -137,11 +126,9 @@ const Button = styled.button `
     border: 0;
     margin-right: 1.3rem;
    
-
     &:focus {
         outline: 0;
     }
-
 `;
 
 const ContainerPost = styled.div `
@@ -164,19 +151,16 @@ const ContainerPost = styled.div `
             outline:0;
         }
     }
-
     textarea {
         background: #EFEFEF;
         border-radius: 0.3rem;
         border: 0;
         padding-left: 1rem;
 
-            &:focus {
+        &:focus {
             outline:0;
         }
-
     }
-
 
     @media(max-width: 800px) {
         width: 100%; 

@@ -1,6 +1,5 @@
 import React, {useState, useContext, useEffect} from 'react'
 import axios from 'axios'
-import ReactHashtag from "react-hashtag";
 import {SiProbot} from "react-icons/si";
 import {useParams} from "react-router-dom";
 
@@ -10,7 +9,6 @@ import Post from '../components/Post';
 import {Title, Main, ContainerPage, Posts} from './TimelinePage'
 
 import UserContext from '../contexts/UserContext';
-
 
 export default function User () {
 
@@ -27,10 +25,8 @@ export default function User () {
 
         request.then( ({data}) => {
             setUserPosts(data.posts);
-            console.log("peguei posts do usuario:", data.posts);
             setRequestReturned(true);
         })
-
         request.catch( () => {
             alert("Houve uma falha em obter os posts do usuario. Por favor atualize a página");
             setRequestReturned(true);
@@ -44,21 +40,21 @@ export default function User () {
                 <Title>
                     {(userPosts.length !== 0) ? `${userPosts[0].user.username }'s posts`: '' }
                 </Title>
-            <ContainerPage> 
-                <Posts> 
-                    { requestReturned === false ? 
-                         <img  src = "/images/loading3.gif" className = "loading" /> :
-                         (userPosts.length === 0) ?
-                             <div className = "NoPosts"> 
-                                <SiProbot />
-                                <span>Nenhum Post encontrado</span>
-                            </div> :
-                            userPosts.map( post =>  <Post post = {post} key = {post.id} /> )
-                    }                   
-                </Posts>
-                <Trending />            
-            </ContainerPage>          
-        </Main>
+                <ContainerPage> 
+                    <Posts> 
+                        { requestReturned === false ? 
+                            <img  src = "/images/loading3.gif" className = "loading" /> :
+                            (userPosts.length === 0) ?
+                                <div className = "NoPosts"> 
+                                    <SiProbot />
+                                    <span>Nenhum Post encontrado</span>
+                                </div> :
+                                userPosts.map( post =>  <Post post = {post} key = {post.id} /> )
+                        }                   
+                    </Posts>
+                    <Trending />            
+                </ContainerPage>          
+             </Main>
         </>
     );
 }
