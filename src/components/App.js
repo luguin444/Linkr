@@ -14,7 +14,7 @@ export default function App () {
    
     return (
         <UserProvider >
-            <Router>
+            <Router basename='/Linkr'>
                 <Switch>
                     <Route exact path = "/hashtag/:hashtag">
                         <Hashtags />
