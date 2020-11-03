@@ -36,6 +36,8 @@ export default function TimelinePage () {
         });
     } , [newpostsOcurred]);
 
+    //console.log("peguei os posts", postsTimeline);
+
     return (
         <>
         <Header />

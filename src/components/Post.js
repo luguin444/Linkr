@@ -3,8 +3,9 @@ import axios from 'axios'
 import styled from 'styled-components'
 import ReactHashtag from "react-hashtag";
 import {Link,useHistory} from "react-router-dom";
-import { HiOutlineHeart} from "react-icons/hi"; //vazio cheio
-import { IoMdHeart} from "react-icons/io"; //vazio cheio
+import { HiOutlineHeart, HiOutlinePencil} from "react-icons/hi"; 
+import { IoMdHeart} from "react-icons/io"; 
+import { FiTrash} from "react-icons/fi"; 
 import ReactTooltip from 'react-tooltip';
 
 import { Photo } from './NewPost';
@@ -109,10 +110,17 @@ export default function Post (props) {
                 </>                      
             </LateralContainer>           
             <PostData>
-                <Link to = {`/user/${post.user.id}`} key = {post.user.id}>
+                <Link to = {`/user/${post.user.id}`} key = {post.user.id} className = "command-container">
                     <div className="name">
                         {post.user.username}
                     </div>
+                    { (userDataObject.user.id === post.user.id) ?
+                        <div className = "icons">
+                            < HiOutlinePencil />
+                            <FiTrash />
+                        </div> :
+                        ''
+                    }
                 </Link>
                 <div className="description">
                     <ReactHashtag onHashtagClick = {value => history.push(`/hashtag/${value.substr(1)}`)}>
@@ -182,12 +190,27 @@ const PostData = styled.div `
     margin-left: 1rem;
     margin-bottom: 0.4rem;
     word-break: break-word;
-   
-    .name {
-        font-size: 1.15rem;
-        line-height: 1.4rem;
-        color: #FFF;
+
+    .command-container {
+        display:flex;
+        justify-content: space-between;
+
+        .name {
+            font-size: 1.15rem;
+            line-height: 1.4rem;
+            color: #FFF;
+        }
+
+        .icons {
+            color: white;
+
+             & :last-child {
+                 margin-left: 0.7rem;
+             }
+        }
     }
+   
+
     .description {
         margin-top: 0.5rem;
         font-size: 1.15rem;
