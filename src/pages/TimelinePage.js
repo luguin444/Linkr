@@ -22,14 +22,12 @@ export default function TimelinePage () {
 
     useEffect( () => {
 
-        const request = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v1/linkr/posts?offset=0&", { headers: userDataObject.headerToken })
-        //const request = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v1/linkr/posts?offset=0&", { headers: {'User-Token': "bcde9953-4288-454c-95d6-f7ae1f0505df"}});
+        const request = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v1/linkr/posts?offset=0&", { headers: userDataObject.headerToken });
 
         setNewpostsOcurred(false);
 
         request.then( ({data}) => {
             setPostsTimeline(data.posts);
-            console.log("peguei posts:", data.posts);
             setRequestReturned(true);
         })
         request.catch( ({data}) => {
@@ -38,11 +36,9 @@ export default function TimelinePage () {
         });
     } , [newpostsOcurred]);
 
-    
     return (
         <>
         <Header />
- 
         <Main>
             <Title>
                 timeline  
@@ -58,18 +54,14 @@ export default function TimelinePage () {
                             <span>Nenhum Post encontrado</span>
                         </div> :
                         postsTimeline.map( post =>  <Post post = {post} key = {post.id} /> )
-                    }
-                    
+                    }                   
                 </Posts>
-                <Trending />
-               
-            </ContainerPage>
-            
+                <Trending />              
+            </ContainerPage>          
         </Main>
         </>
     );
 }
-
 
 export const Main = styled.div ` 
     width: 60%;
@@ -98,8 +90,6 @@ export const Title = styled.h1`
         font-size: 2rem;
         line-height: 2.1rem;
     }
-
-
 `;
 
 export const ContainerPage = styled.div` 
@@ -107,15 +97,14 @@ export const ContainerPage = styled.div`
     display: flex;
 `;
 
-
 export const Posts = styled.div ` 
     width: 70%; 
 
     .loading {
         width: 10rem;
         margin: 3rem 13rem;
-    }
 
+    }
     .NoPosts {
         color: #fff;
         font-size: 2rem;
@@ -133,7 +122,9 @@ export const Posts = styled.div `
     @media(max-width: 800px) {
         width: 100%;
         margin: 0 auto; 
+
+        .loading {
+            margin: 3rem 7rem;
+        }
     }
 `;
-
-

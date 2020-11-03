@@ -25,7 +25,6 @@ export default function Trending () {
     useEffect( () => {
 
         const request = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v1/linkr/hashtags/trending", { headers: userDataObject.headerToken });
-        //const request = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v1/linkr/hashtags/trending", { headers: {'User-Token': "bcde9953-4288-454c-95d6-f7ae1f0505df"}});
 
         request.then( ({data}) => {
             setHashtags(data.hashtags);
@@ -34,29 +33,22 @@ export default function Trending () {
             alert("Houve uma falha em obter as hashtags. Por favor atualize a página");
         });
     } , []);
-
-   console.log("Hastags",hashtags);
     
     return (
         <BoxTrending>
-        <div className="title">
-            <div>trending</div>
-            <input 
-                    placeholder="search hashtag" 
-                    value = {inputHashtag} 
-                    onChange = { event => setInputHashtag(event.target.value)} 
-                    onKeyDown = { handleKeyDown }
-                    
-            />
-            
-        </div>
-        <div className="hashtag">   
-            {hashtags.map( hashtag => <Link to = {`/hashtag/${hashtag.name}`} key = {hashtag.id} ><p >{`# ${hashtag.name}`}</p></Link> )}
-        </div>
-        
-        
-    </BoxTrending>
-        
+            <div className="title">
+                <div>trending</div>
+                <input 
+                        placeholder="search hashtag" 
+                        value = {inputHashtag} 
+                        onChange = { event => setInputHashtag(event.target.value)} 
+                        onKeyDown = { handleKeyDown }                   
+                />         
+            </div>
+            <div className="hashtag">   
+                {hashtags.map( hashtag => <Link to = {`/hashtag/${hashtag.name}`} key = {hashtag.id} ><p >{`# ${hashtag.name}`}</p></Link> )}
+            </div>
+         </BoxTrending>     
     );
 }
 
@@ -66,10 +58,7 @@ const BoxTrending = styled.div `
     border-radius: 1rem;
     height: 20rem;
     margin: 0 1rem 0 1rem;
-    
-    
-    
-
+ 
     .title {
         color: white;
         font-family: 'Oswald', sans-serif;
@@ -83,7 +72,7 @@ const BoxTrending = styled.div `
         justify-content: space-between;
         align-items: center;
 
-            input {
+        input {
             height: 1.8rem;
             flex-grow: 1;
             background: #EFEFEF;
@@ -98,10 +87,8 @@ const BoxTrending = styled.div `
                 &:focus {
                 outline:0;
             }
+        }
     }
-
-    }
-
     .hashtag {
         font-family: 'Lato', sans-serif; 
         color: white;
@@ -115,5 +102,4 @@ const BoxTrending = styled.div `
     @media(max-width: 800px) {
         display: none;
     }
-
 `;

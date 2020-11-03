@@ -13,9 +13,7 @@ export default function ContainerLogin () {
     const {setUserDataObject} = useContext(UserContext);
 
     const [buttonAviability, setButtonAviability] = useState(true);
-
-    const [registered, setRegistered] = useState(true); // true = log in
-    
+    const [registered, setRegistered] = useState(true);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState(''); 
     const [username, setUsername] = useState(''); 
@@ -23,7 +21,6 @@ export default function ContainerLogin () {
 
     const history = useHistory();
     
-
     function sendDataToServer() {
 
         if (registered) {
@@ -53,7 +50,7 @@ export default function ContainerLogin () {
                 })
                 request.catch( () => {
                     setButtonAviability(true);
-                    alert("Email/senha incorretos")
+                    alert("Email/senha incorretos");
                 })     
         }  else {
 
@@ -93,7 +90,7 @@ export default function ContainerLogin () {
     return (
         <ContainerGray >
             <StyledContainerLogin>
-                <Input placeholder = "e-mail" value = {email} onChange = { (event) => setEmail(event.target.value)} />
+                <Input placeholder = "e-mail" value = {email} onChange = { (event) => setEmail(event.target.value)} type = "email"/>
                 <Input placeholder = "password" value = {password} onChange = { (event) => setPassword(event.target.value)} type = "password" />
                 {(!registered) && 
                     <>
@@ -101,7 +98,7 @@ export default function ContainerLogin () {
                         <Input placeholder = "picture url" value = {imageURL} onChange = { (event) => setImageURL(event.target.value)} />
                     </>
                 }
-                <ButtonLogin onClick = { () => sendDataToServer()}>{registered ? "Log in" : "Sign up"}</ButtonLogin>
+                <ButtonLogin onClick = { () => sendDataToServer()}> {registered ? "Log in" : "Sign up"} </ButtonLogin>
                 <span onClick = { () => setRegistered(!registered)}> {registered ? "First time ? Create an account!" : "Switch back to log in"} </span>
             </StyledContainerLogin>
          </ContainerGray>
@@ -134,7 +131,6 @@ const StyledContainerLogin = styled.ul`
         color: #fff;
         text-decoration: underline;
     }
-
 `;
 
 const ButtonLogin = styled.button`
@@ -152,4 +148,3 @@ const ButtonLogin = styled.button`
     justify-content: center;
     font-size: 2rem;
 `;
-
