@@ -41,7 +41,7 @@ export default function TimelinePage () {
         <Header />
         <Main>
             <Title>
-                timeline  
+                timeline 
             </Title>
             <ContainerPage> 
                 <Posts> 
@@ -81,6 +81,9 @@ export const Title = styled.h1`
     font-family: 'Oswald', sans-serif;
     font-size: 2.5rem;
     line-height: 5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 
     @media(max-width: 800px) {
         display: flex;
