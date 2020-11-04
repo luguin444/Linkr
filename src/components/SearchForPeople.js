@@ -3,9 +3,8 @@ import axios from 'axios'
 import styled from 'styled-components';
 import {DebounceInput} from 'react-debounce-input';
 
-
 // import { FiSearch } from "react-icons/fi"; //luppinha
-// import {useParams} from "react-router-dom";
+
 
 import UserContext from '../contexts/UserContext';
 import SearchResponse from './SearchResponse';
@@ -15,39 +14,38 @@ export default function SearchForPeople () {
     const {userDataObject} = useContext(UserContext);
     const [inputPeople, setInputPeople] = useState('');
     const [searchUsers, setSearchUsers] = useState([]);
-    console.log(searchUsers);
-
     
     useEffect( () => {
         const request = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v1/linkr/users/search?username=${inputPeople}`, { headers: userDataObject.headerToken });
 
         request.then(response => {
-            setSearchUsers(response.data.users);    
+            setSearchUsers(response.data.users);  
+            followersFirst(response.data.users);
+
         })
     } , [inputPeople]);
 
-   
+    function followersFirst(array) {
+        const arrayTrue = array.filter(user => user.isFollowingLoggedUser === true);  
+        const arrayFalse = array.filter(user => user.isFollowingLoggedUser === false)
+        const orderedList = arrayTrue.concat(arrayFalse);
+        setSearchUsers(orderedList);
+    }
 
     return (
         <StyledSearchPeople>
             <DebounceInput
-        
                 placeholder="Search for people and friends" 
                 minLength={2}
                 debounceTimeout={300}
                 value = {inputPeople} 
-                onChange={event => setInputPeople(event.target.value)}
-                                
+                onChange={event => setInputPeople(event.target.value)}                
              /> 
             <ContainerSearchResponse>
                 {searchUsers.map(user => <SearchResponse user={user} key={user.id} /> )}
             </ContainerSearchResponse>
-            
-
-        </StyledSearchPeople>
-         
+        </StyledSearchPeople>  
     )
-
 }
 
 const StyledSearchPeople = styled.div `
