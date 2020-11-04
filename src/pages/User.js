@@ -2,28 +2,26 @@ import React, {useState, useContext, useEffect} from 'react'
 import axios from 'axios'
 import {SiProbot} from "react-icons/si";
 import {useParams} from "react-router-dom";
-import styled from 'styled-components'
 
 import Header from '../components/Header';
 import Trending from '../components/Trending';
 import Post from '../components/Post';
 import {Title, Main, ContainerPage, Posts} from './TimelinePage'
+import ButtonFollow from '../components/ButtonFollow';
 
 import UserContext from '../contexts/UserContext';
-
 
 
 
 export default function User () {
 
     const {userDataObject} = useContext(UserContext);
-    const [follow, setFollow] = useState(false); //falso = nao segue true = segue
-
+    
     const {id} = useParams();
 
     const [userPosts, setUserPosts] = useState([]);
     const [requestReturned, setRequestReturned] = useState(false);
-    console.log(userPosts);
+    
 
     useEffect( () => {
 
@@ -38,7 +36,8 @@ export default function User () {
             setRequestReturned(true);
         });
     } , []);
-    
+
+
     return (
         <>
             <Header />
@@ -46,13 +45,7 @@ export default function User () {
                 <Title>
                     {(userPosts.length !== 0) ? `${userPosts[0].user.username }'s posts`: '' }
 
-                    <Follow 
-                        bg={follow ? "#fff" : "#1877F2" } 
-                        fontColor={follow ? "#1877F2" : "#fff"}
-                    > 
-                        {follow ? "Unfollow" : "Follow" } 
-
-                    </Follow> 
+                    <ButtonFollow />
                 </Title>
                 <ContainerPage> 
                     <Posts> 
@@ -72,21 +65,3 @@ export default function User () {
         </>
     );
 }
-
-
-
-const Follow = styled.button `
-    background: ${(props) => props.bg};
-    width: 7rem;
-    height: 2rem;
-    border-radius: 0.3rem;
-    border: 0;
-    margin-right: 1.3rem;
-    color: ${(props) => props.fontColor};
-    font-family: 'Lato', sans-serif;
-    font-size: 0.9rem;
-   
-    &:focus {
-        outline: 0;
-    }
-`;

@@ -42,7 +42,8 @@ export default function Trending () {
                         placeholder="search hashtag" 
                         value = {inputHashtag} 
                         onChange = { event => setInputHashtag(event.target.value)} 
-                        onKeyDown = { handleKeyDown }                   
+                        onKeyDown = { handleKeyDown }  
+                                       
                 />         
             </div>
             <div className="hashtag">   

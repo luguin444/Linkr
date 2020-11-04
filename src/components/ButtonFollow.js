@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-// import axios from 'axios'
+import React, { useState, useContext, useEffect} from 'react';
+import axios from 'axios'
 import styled from 'styled-components';
 import {useParams} from "react-router-dom";
 
@@ -12,32 +12,33 @@ export default function ButtonFollow () {
     const [follow, setFollow] = useState(false); //falso = nao segue true = segue
     const {id} = useParams();
     const [loadingFollower, setLoadingFollower] = useState(false);
+    console.log(followersList);
+    
     
     
     //olha pros meus seguidores e define se eu ja sigo ou nao este User;
     useEffect( () => {
-        const request = axios.get("",PostObject, { headers: userDataObject.headerToken });
+        const request = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v1/linkr/users/follows", { headers: userDataObject.headerToken });
 
             request.then( (response) => {
-                console.log(response);
-                setFollowersList([]) //add lista de seguimores
-                setFollow(followersList.some( people => people.id === id));
-            
+                setFollowersList(response.data.users) //add lista de seguimores
+                setFollow(response.data.users.some(people => people.id.toString() === id.toString()));
+                
             }) 
             request.catch( (response) => {
                 alert("Não foi possível executar esta operação! Tente novamente")
                 
             }) 
     } , [follow]);
+
     
     //Essa funcao so sera chamada qdo EU qser dar follow/unfollow neste User
     const getFollow = () => {
-        alert(123);
         setLoadingFollower(true);
 
         if (follow) {
             //Se eu ja sigo, entao quero dar UNFOLLOW
-            const request = axios.post("",PostObject, { headers: userDataObject.headerToken });
+            const request = axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v1/linkr/users/${id}/unfollow`,{},{ headers: userDataObject.headerToken });
 
             request.then( (response) => {
                 setFollow(false);
@@ -49,10 +50,10 @@ export default function ButtonFollow () {
                 setLoadingFollower(false);
                 
             }) 
-
+            
         } else {
             //Se eu NAO sigo, entao quero dar FOLLOW
-            const request = axios.post("",PostObject, { headers: userDataObject.headerToken });
+            const request = axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v1/linkr/users/${id}/follow`,{}, { headers: userDataObject.headerToken });
 
             request.then( (response) => {
                 setFollow(true);
