@@ -4,7 +4,7 @@ import {AiOutlineDown, AiOutlineUp } from "react-icons/ai";
 import {Link} from "react-router-dom";
 
 import Navegation from './Navegation';
-// import SearchForPeople from './SearchForPeople';
+import SearchForPeople from './SearchForPeople';
 
 import UserContext from '../contexts/UserContext';
 
@@ -20,7 +20,7 @@ export default function Header () {
                <Link to = "/timeline">linkr</Link> 
             </Logo>
 
-            {/* <SearchForPeople /> */}
+            <SearchForPeople />
 
             <User>
                 {openNavegation ? 

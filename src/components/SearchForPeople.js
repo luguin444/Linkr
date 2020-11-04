@@ -1,31 +1,43 @@
-import React, { useState,  } from 'react';
-// import axios from 'axios'
+import React, { useState, useContext } from 'react';
+import axios from 'axios'
 import styled from 'styled-components';
+import {DebounceInput} from 'react-debounce-input';
+
+
 // import { FiSearch } from "react-icons/fi"; //luppinha
 // import {useParams} from "react-router-dom";
 
-// import UserContext from '../contexts/UserContext';
+import UserContext from '../contexts/UserContext';
 
 export default function SearchForPeople () { 
 
+    const {userDataObject} = useContext(UserContext);
     const [inputPeople, setInputPeople] = useState('');
+    console.log(inputPeople);
+  
+    if (inputPeople.length >= 3 ) {
+        const request = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v1/linkr/users/search?username=${inputPeople}`, { headers: userDataObject.headerToken });
 
-    const handleKeyDown = (event) => {
-        if (event.key === 'Enter') {
-            console.log(inputPeople);
-            setInputPeople('');
+        request.then(response => {
+            console.log(response);
+             
+        })
+        request.catch( ({data}) => {
+            console.log("Deu erro")
+             
+        });
 
-        }
     }
     
 
-
     return (
-        <StyledSearchPeople 
+        <DebounceInput
                 placeholder="Search for people and friends" 
+                minLength={3}
+                debounceTimeout={300}
                 value = {inputPeople} 
-                onChange = { event => setInputPeople(event.target.value)} 
-                onKeyDown = { handleKeyDown }                 
+                onChange={event => setInputPeople(event.target.value)}
+                               
         /> 
         
     )
