@@ -1,45 +1,34 @@
-import React from 'react'
-import styled from 'styled-components'
+import React from 'react';
+import styled from 'styled-components';
+import { useHistory } from "react-router-dom";
 
 
 
 export default function SearchResponse (props) {
     const {user} = props;
-    console.log(user);
-    
+
+    const history = useHistory();
 
     return (
-        <ContainerSearchResponse>
-            <BoxUser>
-                <img src={user.avatar} />
-                <span>{user.username}</span>
-                {user.isFollowingLoggedUser ? <li><span>following</span></li> : " "}
-            </BoxUser>
-
-        </ContainerSearchResponse>
+       
+        <BoxUser onClick = { () => history.push(`/user/${user.id}`) }>
+            <img src={user.avatar} />
+            <span>{user.username}</span>
+            {user.isFollowingLoggedUser ? <li><span>following</span></li> : " "}
+        </BoxUser>
+       
 
     )
 
 }
 
-const ContainerSearchResponse = styled.div `
-    width: 35rem;
-    height: 9rem;
-    background: #E7E7E7;
-    border-radius: 8px;
-    padding-top: 1.6rem;
-    position: absolute;
-    top: 1rem;
-    left: 1rem;
-    z-index: -1;
-
-`;
 
 const BoxUser = styled.div `
-    margin: 1rem;
+    padding: 1rem;
     display: flex;
     align-items: center;
     font-family: 'Lato', sans-serif;
+    cursor: pointer;
 
     img {
         width: 3rem;

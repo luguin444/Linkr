@@ -15,8 +15,9 @@ export default function SearchForPeople () {
     const {userDataObject} = useContext(UserContext);
     const [inputPeople, setInputPeople] = useState('');
     const [searchUsers, setSearchUsers] = useState([]);
-    console.log(inputPeople);
-  
+    console.log(searchUsers);
+
+    
     useEffect( () => {
         const request = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v1/linkr/users/search?username=${inputPeople}`, { headers: userDataObject.headerToken });
 
@@ -25,20 +26,23 @@ export default function SearchForPeople () {
         })
     } , [inputPeople]);
 
+   
 
     return (
         <StyledSearchPeople>
             <DebounceInput
         
                 placeholder="Search for people and friends" 
-                minLength={3}
+                minLength={2}
                 debounceTimeout={300}
                 value = {inputPeople} 
                 onChange={event => setInputPeople(event.target.value)}
                                 
              /> 
-
-            {searchUsers.map(user => <SearchResponse user={user} key={user.id} />)}
+            <ContainerSearchResponse>
+                {searchUsers.map(user => <SearchResponse user={user} key={user.id} /> )}
+            </ContainerSearchResponse>
+            
 
         </StyledSearchPeople>
          
@@ -47,12 +51,11 @@ export default function SearchForPeople () {
 }
 
 const StyledSearchPeople = styled.div `
-        position: absolute;
+        display:flex;
+        align-items: center;
+        position: fixed;
         top: 1rem;
         left: 30%;
-        
-        
-
 
     input {
         height: 2.5rem;
@@ -67,14 +70,20 @@ const StyledSearchPeople = styled.div `
         font-size: 1.2rem;
         color: #C6C6C6;
         
-    
-
         &:focus {
-        outline:0;
+            outline:0;
         }
-
-
     }
-    
 
+`;
+
+const ContainerSearchResponse = styled.div `
+    width: 35rem;
+    background: #E7E7E7;
+    padding-top: 1.6rem;
+    border-radius: 8px;
+    position: absolute;
+    top: 1.5rem;
+    left: 1rem;
+    z-index: -1;
 `;
