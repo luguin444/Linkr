@@ -32,7 +32,7 @@ export default function Post (props) {
         }    
       };
 
-    const {post, setPostDeleted} = props;
+    const {post, setPostDeleted, setPostEdited} = props;
 
     const history = useHistory();
 
@@ -47,23 +47,30 @@ export default function Post (props) {
     const [modalButtonsDisabled, setModalButtonsDisabled] = useState(false);
     const [OnEditingPost, setOnEditingPost] = useState(false);
     const [postMainDescription, setPostMainDescription] = useState(post.text);
+    const [onSendingPostEdition, setOnSendingPostEdition] = useState(false);
 
     useEffect( () => {
        if (textEditRef.current)
          textEditRef.current.focus();
     }, [OnEditingPost]);
     
-    function editPostDescription() {
 
-        if(OnEditingPost === false) {
+    function sendEditedPostToServer() {
+        setOnSendingPostEdition(true);
 
-            setOnEditingPost(true);
+        const request = axios.put(`https://mock-api.bootcamp.respondeai.com.br/api/v1/linkr/posts/${post.id}`, {'text': postMainDescription}, {headers: userDataObject.headerToken});
 
-
-        } else {
+        request.then( ({data}) => {
+            setOnSendingPostEdition(false);  //input desabilitado
+            setOnEditingPost(false);  //edição finalizada
+            setPostEdited(true);   //refresh Timeline
+        })
+        request.catch( () => {
+            setOnSendingPostEdition(false);
             setOnEditingPost(false);
-        }
-
+            alert("A alteração não foi possível de ser concluída!");
+            setPostMainDescription(post.text);
+        })
     }
 
     function openModal() {
@@ -114,6 +121,7 @@ export default function Post (props) {
         request.then(({data}) => {
             setHaveILikedOrDisliked(true);
             setLikesFromPost(data.post.likes);
+            console.log(likesFromPost);
         });
     }
 
@@ -124,6 +132,7 @@ export default function Post (props) {
         request.then(({data}) => {
             setHaveILikedOrDisliked(true);
             setLikesFromPost(data.post.likes);
+            console.log(likesFromPost);
         });
     }
 
@@ -132,19 +141,19 @@ export default function Post (props) {
         let userNamesLiked = [];
         let stringTooltip = ``;
 
-        if (liked) {       
-            userNamesLiked = haveILikedOrDisliked ? likesFromPost.map(item => item.username) : post.likes.map(item => item['user.username']);
-            userNamesLiked = userNamesLiked.filter( item => item !== userDataObject.user.username);
+        userNamesLiked = haveILikedOrDisliked ? likesFromPost.map(item => item.username) : post.likes.map(item => item['user.username']);
+        userNamesLiked = userNamesLiked.filter( item => item !== userDataObject.user.username);
 
+        if (liked) {       
+            
             if (userNamesLiked.length === 0) {
                 stringTooltip = `Você deu like`
             } else if (userNamesLiked.length === 1) {
                 stringTooltip = `Você e ${userNamesLiked[0]} curtiram`
             } else {
-                stringTooltip = `Você, ${userNamesLiked[0]} e outra ${userNamesLiked.length -1} pessoa `
+                stringTooltip = `Você, ${userNamesLiked[0]} e outra ${userNamesLiked.length -1} pessoa`
             }
         } else {
-            userNamesLiked = post.likes.map(item => item['user.username']);
             if (userNamesLiked.length === 0) {
                 stringTooltip = `0 likes`
             } else if (userNamesLiked.length === 1) {
@@ -170,7 +179,7 @@ export default function Post (props) {
                 }
                 <>
                     <span 
-                        onClick = {() => userWhoLiked()}
+                        //onClick = {() => userWhoLiked()}
                         data-tip = {userWhoLiked()}
                         onMouseOver = { () => {ReactTooltip.show()}}  
                     >
@@ -186,7 +195,10 @@ export default function Post (props) {
                     </div>
                     { (userDataObject.user.id === post.user.id) ?
                         <div className = "icons">
-                            < HiOutlinePencil onClick = { () => editPostDescription()}/>
+                            < HiOutlinePencil onClick = { () => {
+                                setOnEditingPost(!OnEditingPost)
+                                setPostMainDescription(post.text);
+                            }}/>
                             <FiTrash onClick = {openModal}/>
                             <Modal
                                 isOpen={modalIsOpen}
@@ -206,11 +218,16 @@ export default function Post (props) {
                 {OnEditingPost ? 
                     <input 
                         ref = {textEditRef}
+                        disabled = {onSendingPostEdition}
                         value = {postMainDescription}
                         onChange ={e => setPostMainDescription(e.target.value)}
                         onKeyDown = { (event) => {
-                            if(event.key === "Escape")
+                            if(event.key === "Escape") {
                                 setOnEditingPost(false);
+                                setPostMainDescription(post.text);
+                            }                               
+                            else if (event.key === "Enter") 
+                                sendEditedPostToServer();
                         }}
                     /> :
                     <div className="description">

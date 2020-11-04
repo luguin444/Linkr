@@ -21,6 +21,7 @@ export default function TimelinePage () {
     const [postsTimeline, setPostsTimeline] = useState([]);
     const [newpostsOcurred, setNewpostsOcurred] = useState(false);
     const [postDeleted, setPostDeleted] = useState(false);
+    const [postEdited, setPostEdited] = useState(false);
     const [requestReturned, setRequestReturned] = useState(false);
     
 
@@ -31,6 +32,7 @@ export default function TimelinePage () {
 
         setNewpostsOcurred(false);
         setPostDeleted(false);
+        setPostEdited(false);
 
         request.then( ({data}) => {
             setPostsTimeline(data.posts);
@@ -40,9 +42,9 @@ export default function TimelinePage () {
             alert("Houve uma falha em obter os posts. Por favor atualize a página");
             setRequestReturned(true);
         });
-    } , [newpostsOcurred, postDeleted]);
+    } , [newpostsOcurred, postDeleted,postEdited]);
 
-    //console.log("peguei os posts", postsTimeline);
+    console.log("peguei os posts", postsTimeline);
 
     return (
         <>
@@ -61,7 +63,13 @@ export default function TimelinePage () {
                             <SiProbot />
                             <span>Nenhum Post encontrado</span>
                         </div> :
-                        postsTimeline.map( post =>  <Post post = {post} key = {post.id} setPostDeleted = {setPostDeleted}/>)
+                        postsTimeline.map( post => 
+                             <Post 
+                                post = {post} 
+                                key = {post.id} 
+                                setPostDeleted = {setPostDeleted} 
+                                setPostEdited = {setPostEdited}
+                            />)
                     }                   
                 </Posts>
                 <Trending />              
