@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useRef, useEffect } from 'react'
 import axios from 'axios'
 import styled from 'styled-components'
 import ReactHashtag from "react-hashtag";
@@ -32,14 +32,42 @@ export default function Post (props) {
         }    
       };
 
+    const {post, setPostDeleted} = props;
+
+    const history = useHistory();
+
+    const textEditRef = useRef();
+
+    const {userDataObject} = useContext(UserContext);
+
+    const [liked, setliked] = useState(isLikedPost(userDataObject));
+    const [likesFromPost, setLikesFromPost] = useState(post.likes);
+    const [haveILikedOrDisliked, setHaveILikedOrDisliked] = useState(false);
     const [modalIsOpen,setIsOpen] = useState(false);
     const [modalButtonsDisabled, setModalButtonsDisabled] = useState(false);
+    const [OnEditingPost, setOnEditingPost] = useState(false);
+    const [postMainDescription, setPostMainDescription] = useState(post.text);
+
+    useEffect( () => {
+       if (textEditRef.current)
+         textEditRef.current.focus();
+    }, [OnEditingPost]);
+    
+    function editPostDescription() {
+
+        if(OnEditingPost === false) {
+
+            setOnEditingPost(true);
+
+
+        } else {
+            setOnEditingPost(false);
+        }
+
+    }
 
     function openModal() {
         setIsOpen(true);
-    }
-    
-    function afterOpenModal() {
     }
     
     function closeModal(){
@@ -64,16 +92,6 @@ export default function Post (props) {
             setModalButtonsDisabled(false);
         })
     }
-    
-    const {post, setPostDeleted} = props;
-
-    const history = useHistory();
-
-    const {userDataObject} = useContext(UserContext);
-
-    const [liked, setliked] = useState(isLikedPost(userDataObject));
-    const [likesFromPost, setLikesFromPost] = useState(post.likes);
-    const [haveILikedOrDisliked, setHaveILikedOrDisliked] = useState(false);
 
     const openInNewTab = (url) => {
         const newWindow = window.open(url, '_blank', 'noopener,noreferrer')
@@ -139,6 +157,7 @@ export default function Post (props) {
         }
         return stringTooltip;
     }
+
     return (
         <BoxPost>
             <LateralContainer>
@@ -167,11 +186,10 @@ export default function Post (props) {
                     </div>
                     { (userDataObject.user.id === post.user.id) ?
                         <div className = "icons">
-                            < HiOutlinePencil />
+                            < HiOutlinePencil onClick = { () => editPostDescription()}/>
                             <FiTrash onClick = {openModal}/>
                             <Modal
                                 isOpen={modalIsOpen}
-                                onAfterOpen={afterOpenModal}
                                 onRequestClose={closeModal}
                                 style={customStyles}
                             >
@@ -185,11 +203,23 @@ export default function Post (props) {
                         ''
                     }
                 </div>
-                <div className="description">
-                    <ReactHashtag onHashtagClick = {value => history.push(`/hashtag/${value.substr(1)}`)}>
-                        {post.text}
-                    </ReactHashtag> 
-                </div>             
+                {OnEditingPost ? 
+                    <input 
+                        ref = {textEditRef}
+                        value = {postMainDescription}
+                        onChange ={e => setPostMainDescription(e.target.value)}
+                        onKeyDown = { (event) => {
+                            if(event.key === "Escape")
+                                setOnEditingPost(false);
+                        }}
+                    /> :
+                    <div className="description">
+                        <ReactHashtag onHashtagClick = {value => history.push(`/hashtag/${value.substr(1)}`)} >
+                            {post.text}
+                        </ReactHashtag> 
+                    </div>  
+                }
+                         
                 <div className="link" onClick={() => openInNewTab( `${ post.link }`)}>
                     <div className = "infoPost">
                         <div> { post.linkTitle}</div>
@@ -283,11 +313,19 @@ const PostData = styled.div `
         font-weight: 700;
         word-break: break-word;
 
-        span {
+        span {    //ReactHashtag gera spans como default para as #
             color: #fff;
             font-weight: bold;
         }
     }
+
+    input {
+        height: 2rem;
+        border: 0;
+        margin-top: 0.4rem;
+        border-radius: 0.7rem;
+    }
+
     .link {
         border: 1px solid #4D4D4D;
         border-radius: 0.8rem;

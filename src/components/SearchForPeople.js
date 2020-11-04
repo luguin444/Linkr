@@ -15,9 +15,9 @@ export default function SearchForPeople () {
     const {userDataObject} = useContext(UserContext);
     const [inputPeople, setInputPeople] = useState('');
     const [searchUsers, setSearchUsers] = useState([]);
-    console.log(inputPeople);
+   // console.log(inputPeople);
   
-    
+    /*
     const request = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v1/linkr/users/search?username=${inputPeople}`, { headers: userDataObject.headerToken });
 
     request.then(response => {
@@ -26,11 +26,11 @@ export default function SearchForPeople () {
             
     })
     request.catch( ({data}) => {
-        console.log("Deu erro")
+       // console.log("Deu erro")
             
     });
 
-  
+  */
     
 
     return (
