@@ -2,6 +2,9 @@ import React, {useContext, useEffect, useState} from 'react'
 import axios from 'axios'
 import styled from 'styled-components'
 import { SiProbot} from "react-icons/si";
+import Modal from 'react-modal';
+
+//Modal.setAppElement('#root');
 
 import Header from '../components/Header';
 import NewPost from '../components/NewPost';
@@ -17,7 +20,9 @@ export default function TimelinePage () {
 
     const [postsTimeline, setPostsTimeline] = useState([]);
     const [newpostsOcurred, setNewpostsOcurred] = useState(false);
+    const [postDeleted, setPostDeleted] = useState(false);
     const [requestReturned, setRequestReturned] = useState(false);
+    
 
 
     useEffect( () => {
@@ -25,6 +30,7 @@ export default function TimelinePage () {
         const request = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v1/linkr/posts?offset=0&", { headers: userDataObject.headerToken });
 
         setNewpostsOcurred(false);
+        setPostDeleted(false);
 
         request.then( ({data}) => {
             setPostsTimeline(data.posts);
@@ -34,7 +40,7 @@ export default function TimelinePage () {
             alert("Houve uma falha em obter os posts. Por favor atualize a página");
             setRequestReturned(true);
         });
-    } , [newpostsOcurred]);
+    } , [newpostsOcurred, postDeleted]);
 
     //console.log("peguei os posts", postsTimeline);
 
@@ -55,7 +61,7 @@ export default function TimelinePage () {
                             <SiProbot />
                             <span>Nenhum Post encontrado</span>
                         </div> :
-                        postsTimeline.map( post =>  <Post post = {post} key = {post.id} /> )
+                        postsTimeline.map( post =>  <Post post = {post} key = {post.id} setPostDeleted = {setPostDeleted}/>)
                     }                   
                 </Posts>
                 <Trending />              

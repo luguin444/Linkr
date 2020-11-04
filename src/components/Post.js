@@ -7,14 +7,65 @@ import { HiOutlineHeart, HiOutlinePencil} from "react-icons/hi";
 import { IoMdHeart} from "react-icons/io"; 
 import { FiTrash} from "react-icons/fi"; 
 import ReactTooltip from 'react-tooltip';
+import Modal from 'react-modal';
 
 import { Photo } from './NewPost';
 
 import UserContext from '../contexts/UserContext';
+import { AiOutlineRadiusBottomleft } from 'react-icons/ai';
+import ModalContent from './ModalContent';
 
 export default function Post (props) {
+
+    Modal.setAppElement('#root');
+
+    var customStyles = {
+        content : {
+          top                   : '50%',
+          left                  : '50%',
+          right                 : 'auto',
+          bottom                : 'auto',
+          marginRight           : '-50%',
+          transform             : 'translate(-50%, -50%)',
+          background            : '#333333',
+          borderRadius          : '2rem',
+        }    
+      };
+
+    const [modalIsOpen,setIsOpen] = useState(false);
+    const [modalButtonsDisabled, setModalButtonsDisabled] = useState(false);
+
+    function openModal() {
+        setIsOpen(true);
+    }
     
-    const {post} = props;
+    function afterOpenModal() {
+    }
+    
+    function closeModal(){
+        setIsOpen(false);
+    }
+
+    function deletePostFromServer(){
+
+        setModalButtonsDisabled(true);
+        const request = axios.delete(`https://mock-api.bootcamp.respondeai.com.br/api/v1/linkr/posts/${post.id}`, {headers: userDataObject.headerToken, params: {}});
+
+        request.then(({data}) => {
+            closeModal();
+            setIsOpen(false);
+            setModalButtonsDisabled(false);
+            setPostDeleted(true);
+        })
+        request.catch( ()=> {
+            alert("Não foi possível excluir esse post");
+            closeModal();
+            setIsOpen(false);
+            setModalButtonsDisabled(false);
+        })
+    }
+    
+    const {post, setPostDeleted} = props;
 
     const history = useHistory();
 
@@ -110,18 +161,30 @@ export default function Post (props) {
                 </>                      
             </LateralContainer>           
             <PostData>
-                <Link to = {`/user/${post.user.id}`} key = {post.user.id} className = "command-container">
-                    <div className="name">
+                <div className = "command-container">
+                    <div className="name" onClick = { () => history.push(`/user/${post.user.id}`) }>
                         {post.user.username}
                     </div>
                     { (userDataObject.user.id === post.user.id) ?
                         <div className = "icons">
                             < HiOutlinePencil />
-                            <FiTrash />
+                            <FiTrash onClick = {openModal}/>
+                            <Modal
+                                isOpen={modalIsOpen}
+                                onAfterOpen={afterOpenModal}
+                                onRequestClose={closeModal}
+                                style={customStyles}
+                            >
+                                <ModalContent 
+                                    closeModal = {closeModal} 
+                                    deletePostFromServer = {deletePostFromServer} 
+                                    modalButtonsDisabled = {modalButtonsDisabled} 
+                                />
+                            </Modal>
                         </div> :
                         ''
                     }
-                </Link>
+                </div>
                 <div className="description">
                     <ReactHashtag onHashtagClick = {value => history.push(`/hashtag/${value.substr(1)}`)}>
                         {post.text}
@@ -142,6 +205,7 @@ export default function Post (props) {
     </BoxPost>      
     );
 }
+
 
 const BoxPost = styled.article `
     height: auto;
@@ -206,7 +270,7 @@ const PostData = styled.div `
 
              & :last-child {
                  margin-left: 0.7rem;
-             }
+             }            
         }
     }
    
