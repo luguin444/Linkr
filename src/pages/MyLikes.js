@@ -46,7 +46,7 @@ export default function MyPosts () {
                                     <SiProbot />
                                     <span>Nenhum Post encontrado</span>
                                 </div> :
-                                myLikes.map( post =>  <Post post = {post} key = {post.id} /> )
+                                myLikes.map( post =>  <Post post = {post} key = {post.id}/> )
                         }                    
                     </Posts>
                     <Trending />            

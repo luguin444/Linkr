@@ -3,17 +3,69 @@ import axios from 'axios'
 import styled from 'styled-components'
 import ReactHashtag from "react-hashtag";
 import {Link,useHistory} from "react-router-dom";
-import { HiOutlineHeart} from "react-icons/hi"; //vazio cheio
-import { IoMdHeart} from "react-icons/io"; //vazio cheio
+import { HiOutlineHeart, HiOutlinePencil} from "react-icons/hi"; 
+import { IoMdHeart} from "react-icons/io"; 
+import { FiTrash} from "react-icons/fi"; 
 import ReactTooltip from 'react-tooltip';
+import Modal from 'react-modal';
 
 import { Photo } from './NewPost';
 
 import UserContext from '../contexts/UserContext';
+import { AiOutlineRadiusBottomleft } from 'react-icons/ai';
+import ModalContent from './ModalContent';
 
 export default function Post (props) {
+
+    Modal.setAppElement('#root');
+
+    var customStyles = {
+        content : {
+          top                   : '50%',
+          left                  : '50%',
+          right                 : 'auto',
+          bottom                : 'auto',
+          marginRight           : '-50%',
+          transform             : 'translate(-50%, -50%)',
+          background            : '#333333',
+          borderRadius          : '2rem',
+        }    
+      };
+
+    const [modalIsOpen,setIsOpen] = useState(false);
+    const [modalButtonsDisabled, setModalButtonsDisabled] = useState(false);
+
+    function openModal() {
+        setIsOpen(true);
+    }
     
-    const {post} = props;
+    function afterOpenModal() {
+    }
+    
+    function closeModal(){
+        setIsOpen(false);
+    }
+
+    function deletePostFromServer(){
+
+        setModalButtonsDisabled(true);
+        const request = axios.delete(`https://mock-api.bootcamp.respondeai.com.br/api/v1/linkr/posts/${post.id}`, {headers: userDataObject.headerToken, params: {}});
+
+        request.then(({data}) => {
+            closeModal();
+            setIsOpen(false);
+            setModalButtonsDisabled(false);
+            setPostDeleted(true);
+        })
+        request.catch( ()=> {
+            alert("Não foi possível excluir esse post");
+            closeModal();
+            setIsOpen(false);
+            setModalButtonsDisabled(false);
+        })
+    }
+    
+    const {post, setPostDeleted} = props;
 
     const history = useHistory();
 
@@ -109,11 +161,30 @@ export default function Post (props) {
                 </>                      
             </LateralContainer>           
             <PostData>
-                <Link to = {`/user/${post.user.id}`} key = {post.user.id}>
-                    <div className="name">
+                <div className = "command-container">
+                    <div className="name" onClick = { () => history.push(`/user/${post.user.id}`) }>
                         {post.user.username}
                     </div>
-                </Link>
+                    { (userDataObject.user.id === post.user.id) ?
+                        <div className = "icons">
+                            < HiOutlinePencil />
+                            <FiTrash onClick = {openModal}/>
+                            <Modal
+                                isOpen={modalIsOpen}
+                                onAfterOpen={afterOpenModal}
+                                onRequestClose={closeModal}
+                                style={customStyles}
+                            >
+                                <ModalContent 
+                                    closeModal = {closeModal} 
+                                    deletePostFromServer = {deletePostFromServer} 
+                                    modalButtonsDisabled = {modalButtonsDisabled} 
+                                />
+                            </Modal>
+                        </div> :
+                        ''
+                    }
+                </div>
                 <div className="description">
                     <ReactHashtag onHashtagClick = {value => history.push(`/hashtag/${value.substr(1)}`)}>
                         {post.text}
@@ -134,6 +205,7 @@ export default function Post (props) {
     </BoxPost>      
     );
 }
+
 
 const BoxPost = styled.article `
     height: auto;
@@ -182,12 +254,27 @@ const PostData = styled.div `
     margin-left: 1rem;
     margin-bottom: 0.4rem;
     word-break: break-word;
-   
-    .name {
-        font-size: 1.15rem;
-        line-height: 1.4rem;
-        color: #FFF;
+
+    .command-container {
+        display:flex;
+        justify-content: space-between;
+
+        .name {
+            font-size: 1.15rem;
+            line-height: 1.4rem;
+            color: #FFF;
+        }
+
+        .icons {
+            color: white;
+
+             & :last-child {
+                 margin-left: 0.7rem;
+             }            
+        }
     }
+   
+
     .description {
         margin-top: 0.5rem;
         font-size: 1.15rem;
