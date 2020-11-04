@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useRef, useEffect } from 'react'
 import axios from 'axios'
 import styled from 'styled-components'
 import ReactHashtag from "react-hashtag";
@@ -32,14 +32,49 @@ export default function Post (props) {
         }    
       };
 
+    const {post, setPostDeleted, setPostEdited} = props;
+
+    const history = useHistory();
+
+    const textEditRef = useRef();
+
+    const {userDataObject} = useContext(UserContext);
+
+    const [liked, setliked] = useState(isLikedPost(userDataObject));
+    const [likesFromPost, setLikesFromPost] = useState(post.likes);
+    const [haveILikedOrDisliked, setHaveILikedOrDisliked] = useState(false);
     const [modalIsOpen,setIsOpen] = useState(false);
     const [modalButtonsDisabled, setModalButtonsDisabled] = useState(false);
+    const [OnEditingPost, setOnEditingPost] = useState(false);
+    const [postMainDescription, setPostMainDescription] = useState(post.text);
+    const [onSendingPostEdition, setOnSendingPostEdition] = useState(false);
+
+    useEffect( () => {
+       if (textEditRef.current)
+         textEditRef.current.focus();
+    }, [OnEditingPost]);
+    
+
+    function sendEditedPostToServer() {
+        setOnSendingPostEdition(true);
+
+        const request = axios.put(`https://mock-api.bootcamp.respondeai.com.br/api/v1/linkr/posts/${post.id}`, {'text': postMainDescription}, {headers: userDataObject.headerToken});
+
+        request.then( ({data}) => {
+            setOnSendingPostEdition(false);  //input desabilitado
+            setOnEditingPost(false);  //edição finalizada
+            setPostEdited(true);   //refresh Timeline
+        })
+        request.catch( () => {
+            setOnSendingPostEdition(false);
+            setOnEditingPost(false);
+            alert("A alteração não foi possível de ser concluída!");
+            setPostMainDescription(post.text);
+        })
+    }
 
     function openModal() {
         setIsOpen(true);
-    }
-    
-    function afterOpenModal() {
     }
     
     function closeModal(){
@@ -64,16 +99,6 @@ export default function Post (props) {
             setModalButtonsDisabled(false);
         })
     }
-    
-    const {post, setPostDeleted} = props;
-
-    const history = useHistory();
-
-    const {userDataObject} = useContext(UserContext);
-
-    const [liked, setliked] = useState(isLikedPost(userDataObject));
-    const [likesFromPost, setLikesFromPost] = useState(post.likes);
-    const [haveILikedOrDisliked, setHaveILikedOrDisliked] = useState(false);
 
     const openInNewTab = (url) => {
         const newWindow = window.open(url, '_blank', 'noopener,noreferrer')
@@ -96,6 +121,7 @@ export default function Post (props) {
         request.then(({data}) => {
             setHaveILikedOrDisliked(true);
             setLikesFromPost(data.post.likes);
+            console.log(likesFromPost);
         });
     }
 
@@ -106,6 +132,7 @@ export default function Post (props) {
         request.then(({data}) => {
             setHaveILikedOrDisliked(true);
             setLikesFromPost(data.post.likes);
+            console.log(likesFromPost);
         });
     }
 
@@ -114,19 +141,19 @@ export default function Post (props) {
         let userNamesLiked = [];
         let stringTooltip = ``;
 
-        if (liked) {       
-            userNamesLiked = haveILikedOrDisliked ? likesFromPost.map(item => item.username) : post.likes.map(item => item['user.username']);
-            userNamesLiked = userNamesLiked.filter( item => item !== userDataObject.user.username);
+        userNamesLiked = haveILikedOrDisliked ? likesFromPost.map(item => item.username) : post.likes.map(item => item['user.username']);
+        userNamesLiked = userNamesLiked.filter( item => item !== userDataObject.user.username);
 
+        if (liked) {       
+            
             if (userNamesLiked.length === 0) {
                 stringTooltip = `Você deu like`
             } else if (userNamesLiked.length === 1) {
                 stringTooltip = `Você e ${userNamesLiked[0]} curtiram`
             } else {
-                stringTooltip = `Você, ${userNamesLiked[0]} e outra ${userNamesLiked.length -1} pessoa `
+                stringTooltip = `Você, ${userNamesLiked[0]} e outra ${userNamesLiked.length -1} pessoa`
             }
         } else {
-            userNamesLiked = post.likes.map(item => item['user.username']);
             if (userNamesLiked.length === 0) {
                 stringTooltip = `0 likes`
             } else if (userNamesLiked.length === 1) {
@@ -139,6 +166,7 @@ export default function Post (props) {
         }
         return stringTooltip;
     }
+
     return (
         <BoxPost>
             <LateralContainer>
@@ -151,7 +179,7 @@ export default function Post (props) {
                 }
                 <>
                     <span 
-                        onClick = {() => userWhoLiked()}
+                        //onClick = {() => userWhoLiked()}
                         data-tip = {userWhoLiked()}
                         onMouseOver = { () => {ReactTooltip.show()}}  
                     >
@@ -167,11 +195,13 @@ export default function Post (props) {
                     </div>
                     { (userDataObject.user.id === post.user.id) ?
                         <div className = "icons">
-                            < HiOutlinePencil />
+                            < HiOutlinePencil onClick = { () => {
+                                setOnEditingPost(!OnEditingPost)
+                                setPostMainDescription(post.text);
+                            }}/>
                             <FiTrash onClick = {openModal}/>
                             <Modal
                                 isOpen={modalIsOpen}
-                                onAfterOpen={afterOpenModal}
                                 onRequestClose={closeModal}
                                 style={customStyles}
                             >
@@ -185,11 +215,28 @@ export default function Post (props) {
                         ''
                     }
                 </div>
-                <div className="description">
-                    <ReactHashtag onHashtagClick = {value => history.push(`/hashtag/${value.substr(1)}`)}>
-                        {post.text}
-                    </ReactHashtag> 
-                </div>             
+                {OnEditingPost ? 
+                    <input 
+                        ref = {textEditRef}
+                        disabled = {onSendingPostEdition}
+                        value = {postMainDescription}
+                        onChange ={e => setPostMainDescription(e.target.value)}
+                        onKeyDown = { (event) => {
+                            if(event.key === "Escape") {
+                                setOnEditingPost(false);
+                                setPostMainDescription(post.text);
+                            }                               
+                            else if (event.key === "Enter") 
+                                sendEditedPostToServer();
+                        }}
+                    /> :
+                    <div className="description">
+                        <ReactHashtag onHashtagClick = {value => history.push(`/hashtag/${value.substr(1)}`)} >
+                            {post.text}
+                        </ReactHashtag> 
+                    </div>  
+                }
+                         
                 <div className="link" onClick={() => openInNewTab( `${ post.link }`)}>
                     <div className = "infoPost">
                         <div> { post.linkTitle}</div>
@@ -283,11 +330,19 @@ const PostData = styled.div `
         font-weight: 700;
         word-break: break-word;
 
-        span {
+        span {    //ReactHashtag gera spans como default para as #
             color: #fff;
             font-weight: bold;
         }
     }
+
+    input {
+        height: 2rem;
+        border: 0;
+        margin-top: 0.4rem;
+        border-radius: 0.7rem;
+    }
+
     .link {
         border: 1px solid #4D4D4D;
         border-radius: 0.8rem;
