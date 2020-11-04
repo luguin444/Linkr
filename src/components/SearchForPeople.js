@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import axios from 'axios'
 import styled from 'styled-components';
 import {DebounceInput} from 'react-debounce-input';
@@ -17,21 +17,14 @@ export default function SearchForPeople () {
     const [searchUsers, setSearchUsers] = useState([]);
     console.log(inputPeople);
   
-    
-    const request = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v1/linkr/users/search?username=${inputPeople}`, { headers: userDataObject.headerToken });
+    useEffect( () => {
+        const request = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v1/linkr/users/search?username=${inputPeople}`, { headers: userDataObject.headerToken });
 
-    request.then(response => {
-        setSearchUsers(response.data.users);
-       
-            
-    })
-    request.catch( ({data}) => {
-        console.log("Deu erro")
-            
-    });
+        request.then(response => {
+            setSearchUsers(response.data.users);    
+        })
+    } , [inputPeople]);
 
-  
-    
 
     return (
         <StyledSearchPeople>
@@ -48,11 +41,8 @@ export default function SearchForPeople () {
             {searchUsers.map(user => <SearchResponse user={user} key={user.id} />)}
 
         </StyledSearchPeople>
-        
-        
+         
     )
-
-
 
 }
 
