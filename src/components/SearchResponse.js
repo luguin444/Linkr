@@ -29,13 +29,11 @@ const BoxUser = styled.div `
     align-items: center;
     font-family: 'Lato', sans-serif;
     cursor: pointer;
-
     img {
         width: 3rem;
         border-radius: 50%;
         flex-shrink: 0;
     }
-
     span {
         
         font-size: 1.2rem;
@@ -44,11 +42,9 @@ const BoxUser = styled.div `
         margin-left: 0.8rem;
         
     }
-
     li {
         color: #C5C5C5;
         margin-left: 0.8rem;
-
         span {
             margin-left: -0.8rem;
             list-style-type: disc;
@@ -56,5 +52,4 @@ const BoxUser = styled.div `
         }
         
     }
-
 `;
