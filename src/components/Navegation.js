@@ -8,11 +8,16 @@ export default function Navegation () {
 
     const {setUserDataObject} = useContext(UserContext);
 
+    function logginOut () {
+        localStorage.removeItem('@user/token');
+        setUserDataObject({});
+    }
+
     return (
         <StyledNavegation>
             <Link to = "/my-posts"> <div>My posts</div> </Link>
             <Link to = "/my-likes"> <div>My likes</div> </Link>
-            <Link to = "/"> <div onClick = { () => setUserDataObject({})}>Logout</div> </Link> 
+            <Link to = "/"> <div onClick = {logginOut}>Logout</div> </Link> 
         </StyledNavegation>
     );
 }

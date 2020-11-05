@@ -63,8 +63,6 @@ export default function TimelinePage () {
         });
     } , []);
 
-    //console.log("peguei os posts", postsTimeline);
-
     return (
         <>
         <Header />

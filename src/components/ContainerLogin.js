@@ -1,4 +1,4 @@
-import React, {useState, useContext} from 'react'
+import React, {useState, useContext, useEffect} from 'react'
 import axios from 'axios'
 import styled from 'styled-components'
 import { useHistory} from "react-router-dom";
@@ -20,6 +20,22 @@ export default function ContainerLogin () {
     const [imageURL, setImageURL] = useState('');
 
     const history = useHistory();
+
+    // useEffect( () => {
+    //     if(localStorage.getItem('@user/token')) {
+
+    //         // const dataUser = {
+    //         //     "email": email,
+    //         //     "password": password 
+    //         // }
+    //         //const request = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v1/linkr/sign_in", dataUser);
+    //         const request = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v1/linkr/users/:userId")
+    
+    //         request.then( ({data}) =>  setUserDataObject ({ 'headerToken': {'User-Token': data.token}, 'user': data.user}));
+               
+    //         history.push('/timeline');
+    //     }  
+    // },[]);
     
     function sendDataToServer() {
 
@@ -45,6 +61,7 @@ export default function ContainerLogin () {
     
                 request.then( ({data}) => {
                     setUserDataObject ({ 'headerToken': {'User-Token': data.token}, 'user': data.user});
+                    localStorage.setItem('@user/token', data.token);
                     setButtonAviability(true);
                     history.push('/timeline');
                 })
@@ -75,6 +92,7 @@ export default function ContainerLogin () {
 
             request.then( ({data}) => {
                 setUserDataObject ({ 'headerToken': {'User-Token': data.token}, 'user': data.user});
+                localStorage.setItem('@user/token', data.token);
                 history.push('/timeline');
 
             })
