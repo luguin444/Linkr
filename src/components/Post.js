@@ -43,7 +43,7 @@ export default function Post (props) {
 
     const {userDataObject} = useContext(UserContext);
 
-    const [liked, setliked] = useState(isLikedPost(userDataObject));
+    const [liked, setLiked] = useState(isLikedPost(userDataObject));
     const [likesFromPost, setLikesFromPost] = useState(post.likes);
     const [haveILikedOrDisliked, setHaveILikedOrDisliked] = useState(false);
     const [modalIsOpen,setIsOpen] = useState(false);
@@ -127,7 +127,7 @@ export default function Post (props) {
     }
 
     function likePost() {      
-        setliked(true);
+        setLiked(true);
         const request = axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v1/linkr/posts/${post.id}/like`, {}, { headers: userDataObject.headerToken });
 
         request.then(({data}) => {
@@ -138,7 +138,7 @@ export default function Post (props) {
     }
 
     function dislikePost() {      
-        setliked(false);
+        setLiked(false);
         const request = axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v1/linkr/posts/${post.id}/dislike`, {}, { headers: userDataObject.headerToken });
 
         request.then(({data}) => {
@@ -154,6 +154,11 @@ export default function Post (props) {
         let stringTooltip = ``;
 
         userNamesLiked = haveILikedOrDisliked ? likesFromPost.map(item => item.username) : post.likes.map(item => item['user.username']);
+        
+        if (from === "myLikes") {
+            userNamesLiked = post.likes.map(item => item.username);
+        }
+
         userNamesLiked = userNamesLiked.filter( item => item !== userDataObject.user.username);
 
         if (liked) {       

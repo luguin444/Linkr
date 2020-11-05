@@ -20,32 +20,50 @@ export default function TimelinePage () {
     const {userDataObject} = useContext(UserContext);
 
     const [postsTimeline, setPostsTimeline] = useState([]);
+    const [usersFollowed, setUsersFollowed] = useState([]);
     const [newpostsOcurred, setNewpostsOcurred] = useState(false);
     const [postDeleted, setPostDeleted] = useState(false);
     const [postEdited, setPostEdited] = useState(false);
     const [requestReturned, setRequestReturned] = useState(false);
     
+    useEffect(RequestPostFromFollowers,[]);
 
+    useEffect( () => {
+        const interval = setInterval(RequestPostFromFollowers, 15000);
+
+        return () => clearInterval(interval);    //apaga o intervalo ao sair da Timeline page  (unmount component)
+    } , [newpostsOcurred, postDeleted,postEdited]);
+
+    function RequestPostFromFollowers () {
+        const request = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v1/linkr/following/posts",{headers: userDataObject.headerToken });
+            
+            setNewpostsOcurred(false);
+            setPostDeleted(false);
+            setPostEdited(false);
+
+            request.then( ({data}) => {
+                setPostsTimeline(data.posts);
+                setRequestReturned(true);
+            })
+            request.catch( ({data}) => {
+                alert("Houve uma falha em obter os posts. Por favor atualize a página");
+                setRequestReturned(true);
+            });
+    }
 
     useEffect( () => {
 
-        const request = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v1/linkr/posts?offset=0&", { headers: userDataObject.headerToken });
-
-        setNewpostsOcurred(false);
-        setPostDeleted(false);
-        setPostEdited(false);
+        const request = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v1/linkr/users/follows", { headers: userDataObject.headerToken });
 
         request.then( ({data}) => {
-            setPostsTimeline(data.posts);
-            setRequestReturned(true);
+            setUsersFollowed(data.users);
         })
         request.catch( ({data}) => {
-            alert("Houve uma falha em obter os posts. Por favor atualize a página");
-            setRequestReturned(true);
+            alert("Houve uma falha em obter os seus seguidores. Por favor atualize a página");
         });
-    } , [newpostsOcurred, postDeleted,postEdited]);
+    } , []);
 
-    console.log("peguei os posts", postsTimeline);
+    //console.log("peguei os posts", postsTimeline);
 
     return (
         <>
@@ -62,10 +80,14 @@ export default function TimelinePage () {
                     <NewPost setNewpostsOcurred={setNewpostsOcurred} />
                     {requestReturned === false ? 
                         <img  src = "/images/loading3.gif" className = "loading" /> :
+                        (usersFollowed.length === 0) ?
+                        <div className = "NoPosts"> 
+                            <span>Você não segue ninguém ainda, procure por perfis na busca</span>
+                        </div> :
                         (postsTimeline.length === 0) ?
                         <div className = "NoPosts"> 
                             <SiProbot />
-                            <span>Nenhum Post encontrado</span>
+                            <span>Nenhum Publicação encontrada</span>
                         </div> :
                         postsTimeline.map( post => 
                              <Post 
@@ -140,6 +162,11 @@ export const Posts = styled.div `
         align-items: center;
         justify-content: space-around;
         font-family: 'Oswald', sans-serif; 
+        
+        span {
+            font-size: 1.5rem;
+            text-align: center;
+        }
     }
 
     @media(max-width: 800px) {

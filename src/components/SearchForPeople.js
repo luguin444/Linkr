@@ -37,17 +37,15 @@ export default function SearchForPeople () {
         setSearchUsers(orderedList);
     }
 
+
     return (
         <StyledSearchPeople>
             <DebounceInput
-
                 placeholder="Search for people and friends" 
                 minLength={2}
                 debounceTimeout={300}
                 value = {inputPeople} 
-                onChange={event => setInputPeople(event.target.value)}
-
-                onChange={event => setInputPeople(event.target.value)}                
+                onChange={event => setInputPeople(event.target.value)}             
              /> 
             <ContainerSearchResponse>
                 {searchUsers.map(user => <SearchResponse user={user} key={user.id} /> )}
