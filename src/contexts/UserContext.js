@@ -4,10 +4,15 @@ const UserContext = createContext();
 export default UserContext;
 
 export function UserProvider (props) {
+  
+         let userAlreadyLogged = JSON.parse(localStorage.getItem("@user"));
 
-    const [userDataObject , setUserDataObject] = useState({});
+         const isEmpty = !userAlreadyLogged
+         if(isEmpty) {
+            userAlreadyLogged = {};
+         }
 
-    console.log(userDataObject);
+         const [userDataObject , setUserDataObject] = useState(userAlreadyLogged);
 
     return (
         <UserContext.Provider value = {{userDataObject, setUserDataObject}}>

@@ -125,6 +125,7 @@ const Button = styled.button `
     border-radius: 0.3rem;
     border: 0;
     margin-right: 1.3rem;
+    cursor: pointer;
    
     &:focus {
         outline: 0;

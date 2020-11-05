@@ -9,7 +9,7 @@ export default function Navegation () {
     const {setUserDataObject} = useContext(UserContext);
 
     function logginOut () {
-        localStorage.removeItem('@user/token');
+        localStorage.clear();
         setUserDataObject({});
     }
 

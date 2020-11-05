@@ -10,7 +10,7 @@ import UserContext from '../contexts/UserContext'
 
 export default function ContainerLogin () {
 
-    const {setUserDataObject} = useContext(UserContext);
+    const {userDataObject, setUserDataObject} = useContext(UserContext);
 
     const [buttonAviability, setButtonAviability] = useState(true);
     const [registered, setRegistered] = useState(true);
@@ -21,22 +21,7 @@ export default function ContainerLogin () {
 
     const history = useHistory();
 
-    // useEffect( () => {
-    //     if(localStorage.getItem('@user/token')) {
-
-    //         // const dataUser = {
-    //         //     "email": email,
-    //         //     "password": password 
-    //         // }
-    //         //const request = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v1/linkr/sign_in", dataUser);
-    //         const request = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v1/linkr/users/:userId")
-    
-    //         request.then( ({data}) =>  setUserDataObject ({ 'headerToken': {'User-Token': data.token}, 'user': data.user}));
-               
-    //         history.push('/timeline');
-    //     }  
-    // },[]);
-    
+            
     function sendDataToServer() {
 
         if (registered) {
@@ -61,7 +46,7 @@ export default function ContainerLogin () {
     
                 request.then( ({data}) => {
                     setUserDataObject ({ 'headerToken': {'User-Token': data.token}, 'user': data.user});
-                    localStorage.setItem('@user/token', data.token);
+                    localStorage.setItem('@user', JSON.stringify({ 'headerToken': {'User-Token': data.token}, 'user': data.user}));
                     setButtonAviability(true);
                     history.push('/timeline');
                 })
@@ -92,7 +77,7 @@ export default function ContainerLogin () {
 
             request.then( ({data}) => {
                 setUserDataObject ({ 'headerToken': {'User-Token': data.token}, 'user': data.user});
-                localStorage.setItem('@user/token', data.token);
+                localStorage.setItem('@user', JSON.stringify({ 'headerToken': {'User-Token': data.token}, 'user': data.user}));
                 history.push('/timeline');
 
             })
@@ -117,8 +102,12 @@ export default function ContainerLogin () {
                         <Input placeholder = "picture url" value = {imageURL} onChange = { (event) => setImageURL(event.target.value)} />
                     </>
                 }
-                <ButtonLogin onClick = { () => sendDataToServer()}> {registered ? "Log in" : "Sign up"} </ButtonLogin>
-                <span onClick = { () => setRegistered(!registered)}> {registered ? "First time ? Create an account!" : "Switch back to log in"} </span>
+                <ButtonLogin onClick = { () => sendDataToServer()} disabled = {!buttonAviability}> 
+                    {registered ? "Log in" : "Sign up"} 
+                </ButtonLogin>
+                <span onClick = { () => setRegistered(!registered)} > 
+                    {registered ? "First time ? Create an account!" : "Switch back to log in"} 
+                </span>
             </StyledContainerLogin>
          </ContainerGray>
     );
@@ -166,4 +155,5 @@ const ButtonLogin = styled.button`
     align-items: center;
     justify-content: center;
     font-size: 2rem;
+    cursor: pointer;
 `;
