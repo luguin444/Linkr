@@ -58,7 +58,8 @@ const BoxTrending = styled.div `
     width: 19.8rem;
     border-radius: 1rem;
     height: 20rem;
-    margin: 0 1rem 0 1rem;
+    margin: 0.03rem 1rem 0 0.5rem;
+    z-index: -1;
  
     .title {
         color: white;

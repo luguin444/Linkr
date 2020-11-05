@@ -128,12 +128,14 @@ export const Title = styled.h1`
     align-items: center;
 
     @media(max-width: 800px) {
+        width: 100vw;
         display: flex;
-        justify-content: flex-start;
         padding: 1rem;
         margin-top: 5rem;
-        font-size: 2rem;
         line-height: 2.1rem;
+        flex-direction: column;
+        align-items: flex-start;
+    
     }
 `;
 
