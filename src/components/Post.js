@@ -2,12 +2,14 @@ import React, { useState, useContext, useRef, useEffect } from 'react'
 import axios from 'axios'
 import styled from 'styled-components'
 import ReactHashtag from "react-hashtag";
-import {Link,useHistory} from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { HiOutlineHeart, HiOutlinePencil} from "react-icons/hi"; 
 import { IoMdHeart} from "react-icons/io"; 
 import { FiTrash} from "react-icons/fi"; 
 import ReactTooltip from 'react-tooltip';
 import Modal from 'react-modal';
+import getYouTubeID from 'get-youtube-id';
+import YouTube from "react-youtube";
 
 import { Photo } from './NewPost';
 
@@ -32,8 +34,9 @@ export default function Post (props) {
         }    
       };
 
-    const {post, setPostDeleted, setPostEdited, from} = props;
-
+    const {post, setPostDeleted, setPostEdited} = props;
+    const { link } = post;
+    
     const history = useHistory();
 
     const textEditRef = useRef();
@@ -48,7 +51,16 @@ export default function Post (props) {
     const [OnEditingPost, setOnEditingPost] = useState(false);
     const [postMainDescription, setPostMainDescription] = useState(post.text);
     const [onSendingPostEdition, setOnSendingPostEdition] = useState(false);
-
+    
+    //layput do player embedded do YouTube
+    const opts = {
+        height: "390",
+        width: "490",
+        playerVars: {
+          autoplay: 0
+        }
+      };
+    
     useEffect( () => {
        if (textEditRef.current)
          textEditRef.current.focus();
@@ -143,7 +155,7 @@ export default function Post (props) {
 
         userNamesLiked = haveILikedOrDisliked ? likesFromPost.map(item => item.username) : post.likes.map(item => item['user.username']);
         
-        if (from === "myLikes") {
+        if (likesFromPost === "myLikes") {
             userNamesLiked = post.likes.map(item => item.username);
         }
 
@@ -242,17 +254,25 @@ export default function Post (props) {
                     </div>  
                 }
                          
-                <div className="link" onClick={() => openInNewTab( `${ post.link }`)}>
-                    <div className = "infoPost">
-                        <div> { post.linkTitle}</div>
-                    
-                        <div className = "description"> 
-                                {`${post.linkDescription}`}                                               
-                        </div>                    
-                        <div> { post.link } </div>
-                    </div>
-                    <img src = { post.linkImage}/>
-                </div>   
+                
+                {getYouTubeID( link ) 
+                    ? <div className="player">
+                        <YouTube videoId={getYouTubeID( link )} opts={opts}  /> 
+                        <span onClick={() => openInNewTab( `${ link }`)}> {link} </span>
+                      </div>
+
+                    : <> <div className="link" onClick={() => openInNewTab( `${ link }`)}>
+                            <div className = "infoPost">
+                                <div> { post.linkTitle}</div>
+                        
+                                <div className = "description"> 
+                                    {`${post.linkDescription}`}                                               
+                                </div>                    
+                                <div> {link} </div>
+                            </div>
+                            <img src = { post.linkImage}/> 
+                        </div> </> 
+                }
             </PostData>
     </BoxPost>      
     );
@@ -334,8 +354,9 @@ const PostData = styled.div `
         color: #B7B7B7;
         font-weight: 700;
         word-break: break-word;
-
-        span {    //ReactHashtag gera spans como default para as #
+        
+        
+        span {  /* ReactHashtag gera spans como default para as # */  
             color: #fff;
             font-weight: bold;
         }
@@ -348,6 +369,20 @@ const PostData = styled.div `
         border-radius: 0.7rem;
     }
 
+    .player {
+        display: flex;
+        flex-direction: column;
+        margin-top: 0.5rem;
+
+        span {
+            font-family: 'Lato', sans-serif;
+            font-size: 1.1rem;
+            color: #B7B7B7;
+            margin-top: 0.5rem;
+            cursor: pointer;
+        }
+    }
+
     .link {
         border: 1px solid #4D4D4D;
         border-radius: 0.8rem;
@@ -356,6 +391,7 @@ const PostData = styled.div `
         display: flex;
         justify-content: space-between;
         cursor: pointer;
+
 
         .infoPost {
             flex-grow: 1;

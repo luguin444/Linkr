@@ -111,7 +111,7 @@ export const Main = styled.div `
     margin-top: 5rem;
     
     @media(max-width: 800px) {
-        margin: 0;
+        margin: 4rem 0 0 0;
     }
 `;
 
