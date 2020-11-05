@@ -49,8 +49,6 @@ export default function SearchForPeople () {
             <ContainerSearchResponse>
                 {searchUsers.map(user => <SearchResponse user={user} key={user.id} /> )}
             </ContainerSearchResponse>
-
-
         </StyledSearchPeople>
 
     )
@@ -80,6 +78,11 @@ const StyledSearchPeople = styled.div `
             outline:0;
         }
     }
+
+    & :last-child {
+        border-bottom-left-radius: 8px;
+        border-bottom-right-radius: 8px;
+    }  
 
     @media(max-width: 800px) {
             top: 5rem;
@@ -112,7 +115,7 @@ const ContainerSearchResponse = styled.div `
     @media(max-width: 800px) {
         top: 0.6rem;
         left: 0;
-        width: 100%;
+        width: 95vw;
         margin-left: 0.7rem;
 
     }

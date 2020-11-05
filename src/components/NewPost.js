@@ -164,6 +164,13 @@ const ContainerPost = styled.div `
 
     @media(max-width: 800px) {
         width: 100%; 
-        margin-left: 0;      
+        margin-left: 0;  
+
+        input {
+            width: 80vw;
+        }    
+        textarea  {
+            width: 80vw;
+        }    
     }
 `;

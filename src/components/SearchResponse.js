@@ -11,17 +11,20 @@ export default function SearchResponse (props) {
     const history = useHistory();
 
     return (
-       
-        <BoxUser onClick = { () => history.push(`/user/${id}`) }>
-            <img src={avatar} />
-            <span>{username}</span>
-            {isFollowingLoggedUser ? <li><span>following</span></li> : " "}
-        </BoxUser>
+        
+            <BoxUser onClick = { () => history.push(`/user/${id}`) }>
+                <img src={avatar} />
+                <span>{username}</span>
+                {isFollowingLoggedUser ? <li><span>following</span></li> : " "}
+            </BoxUser>
+      
        
 
     )
 
 }
+
+
 
 
 const BoxUser = styled.div `
@@ -30,6 +33,7 @@ const BoxUser = styled.div `
     align-items: center;
     font-family: 'Lato', sans-serif;
     cursor: pointer;
+
     img {
         width: 3rem;
         border-radius: 50%;
@@ -51,6 +55,12 @@ const BoxUser = styled.div `
             list-style-type: disc;
             color: #C5C5C5;
         }
+        
+    }
+
+
+    @media(max-width: 800px) {
+        width: 95vw;
         
     }
 `;

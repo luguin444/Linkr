@@ -29,7 +29,6 @@ export default function User () {
         const request = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v1/linkr/users/${id}`, { headers: userDataObject.headerToken });
 
         request.then( ({data}) => {
-            console.log(data.user.username);
             setUserName(data.user.username);
         })
         
