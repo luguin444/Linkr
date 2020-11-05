@@ -143,12 +143,9 @@ export default function Post (props) {
 
         userNamesLiked = haveILikedOrDisliked ? likesFromPost.map(item => item.username) : post.likes.map(item => item['user.username']);
         
-        // if (from === "myLikes") {
-        //     userNamesLiked = post.likes.map(item => item.username);
-        //     if (!haveILikedOrDisliked)
-        //          setLiked(true);
-        //     console.log("Veio do Mylikes");
-        // }
+        if (from === "myLikes") {
+            userNamesLiked = post.likes.map(item => item.username);
+        }
 
         userNamesLiked = userNamesLiked.filter( item => item !== userDataObject.user.username);
 

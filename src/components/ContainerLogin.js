@@ -78,9 +78,10 @@ export default function ContainerLogin () {
                 history.push('/timeline');
 
             })
-            request.catch( () => {
+            request.catch( (error) => {
                 setButtonAviability(true);
                 alert("Email inserido já está cadastrado");
+                console.log(error.response);
             })
 
         }

@@ -3,8 +3,6 @@ import axios from 'axios'
 import styled from 'styled-components';
 import {DebounceInput} from 'react-debounce-input';
 
-import { FiSearch } from "react-icons/fi"; //luppinha
-
 
 import UserContext from '../contexts/UserContext';
 import SearchResponse from './SearchResponse';
@@ -32,9 +30,9 @@ export default function SearchForPeople () {
         setSearchUsers(orderedList);
     }
 
+
     return (
         <StyledSearchPeople>
-            <div> 
                 <DebounceInput
                     placeholder="Search for people and friends" 
                     minLength={3}
@@ -42,9 +40,6 @@ export default function SearchForPeople () {
                     value = {inputPeople} 
                     onChange={event => setInputPeople(event.target.value)}        
                 /> 
-                <span className="search"><FiSearch /> </span>
-            </div>
-            
             <ContainerSearchResponse>
                 {searchUsers.map(user => <SearchResponse user={user} key={user.id} /> )}
             </ContainerSearchResponse>
@@ -76,15 +71,6 @@ const StyledSearchPeople = styled.div `
             outline:0;
         }
     }
-    span {
-        color: grey;
-        font-size: 1rem;
-        position: absolute;
-        top: 1.3rem;
-        right: 1.5rem;
-
-    }
-
 `;
 
 const ContainerSearchResponse = styled.div `

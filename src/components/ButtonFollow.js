@@ -12,10 +12,7 @@ export default function ButtonFollow () {
     const [follow, setFollow] = useState(false); //falso = nao segue true = segue
     const {id} = useParams();
     const [loadingFollower, setLoadingFollower] = useState(false);
-    console.log(followersList);
-    
-    
-    
+
     //olha pros meus seguidores e define se eu ja sigo ou nao este User;
     useEffect( () => {
         const request = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v1/linkr/users/follows", { headers: userDataObject.headerToken });
