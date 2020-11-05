@@ -15,7 +15,7 @@ export default function SearchForPeople () {
     const {userDataObject} = useContext(UserContext);
     const [inputPeople, setInputPeople] = useState('');
     const [searchUsers, setSearchUsers] = useState([]);
-    console.log(searchUsers);
+    console.log(searchUsers)
 
 
     useEffect( () => {
@@ -23,7 +23,6 @@ export default function SearchForPeople () {
 
         request.then(response => {
             setSearchUsers(response.data.users);    
-            setSearchUsers(response.data.users);  
             followersFirst(response.data.users);
 
         })

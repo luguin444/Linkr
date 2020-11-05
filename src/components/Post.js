@@ -155,7 +155,7 @@ export default function Post (props) {
 
         userNamesLiked = haveILikedOrDisliked ? likesFromPost.map(item => item.username) : post.likes.map(item => item['user.username']);
         
-        if (from === "myLikes") {
+        if (likesFromPost === "myLikes") {
             userNamesLiked = post.likes.map(item => item.username);
         }
 

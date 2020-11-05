@@ -21,6 +21,19 @@ export default function User () {
 
     const [userPosts, setUserPosts] = useState([]);
     const [requestReturned, setRequestReturned] = useState(false);
+    const [userName, setUserName] = useState(" ");
+
+
+    useEffect( () => {
+
+        const request = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v1/linkr/users/${id}`, { headers: userDataObject.headerToken });
+
+        request.then( ({data}) => {
+            console.log(data.user.username);
+            setUserName(data.user.username);
+        })
+        
+    } , []);
     
 
     useEffect( () => {
@@ -43,7 +56,7 @@ export default function User () {
             <Header />
             <Main>
                 <Title>
-                    {(userPosts.length !== 0) ? `${userPosts[0].user.username }'s posts`: '' }
+                    { userName }'s posts: 
 
                     <ButtonFollow />
                 </Title>

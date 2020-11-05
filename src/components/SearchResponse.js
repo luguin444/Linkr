@@ -5,16 +5,17 @@ import { useHistory } from "react-router-dom";
 
 
 export default function SearchResponse (props) {
-    const {user} = props;
+    const { user } = props;
+    const { id, avatar, username, isFollowingLoggedUser } = user;
 
     const history = useHistory();
 
     return (
        
-        <BoxUser onClick = { () => history.push(`/user/${user.id}`) }>
-            <img src={user.avatar} />
-            <span>{user.username}</span>
-            {user.isFollowingLoggedUser ? <li><span>following</span></li> : " "}
+        <BoxUser onClick = { () => history.push(`/user/${id}`) }>
+            <img src={avatar} />
+            <span>{username}</span>
+            {isFollowingLoggedUser ? <li><span>following</span></li> : " "}
         </BoxUser>
        
 
