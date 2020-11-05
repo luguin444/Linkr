@@ -10,6 +10,7 @@ import Header from '../components/Header';
 import NewPost from '../components/NewPost';
 import Trending from '../components/Trending';
 import Post from '../components/Post';
+import SearchForPeople from '../components/SearchForPeople';
 
 import UserContext from '../contexts/UserContext';
 
@@ -49,6 +50,9 @@ export default function TimelinePage () {
     return (
         <>
         <Header />
+         
+        <SearchForPeople />
+       
         <Main>
             <Title>
                 timeline 
