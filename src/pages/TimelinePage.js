@@ -67,7 +67,6 @@ export default function TimelinePage () {
             setPostsTimeline([...postsTimeline, ...newPostsVector]);
             setRequestReturned(true);     
             setTimesScrolled(timesScrolled+10);
-
         })
         request.catch( ({data}) => {
             alert("Houve uma falha em obter os posts. Por favor atualize a página");
@@ -75,10 +74,6 @@ export default function TimelinePage () {
         });
     }
 
-    function scrollPage() {
-        console.log("entrei");
-        requestPostFromFollowersScroll();
-    }
 
     useEffect( () => {
 
@@ -118,10 +113,9 @@ export default function TimelinePage () {
                             </div> :
                             <InfiniteScroll
                                 pageStart={0}
-                                loadMore={scrollPage}
+                                loadMore={requestPostFromFollowersScroll}
                                 hasMore={true}
                                 loader={<img  src = "/images/loading3.gif" className = "loading" />}
-                                //useWindow={false}
                             >
                                { postsTimeline.map( post => 
                                     <Post 
