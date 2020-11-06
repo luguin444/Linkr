@@ -21,7 +21,6 @@ export default function MyPosts () {
         const request = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v1/linkr/posts/liked`, { headers: userDataObject.headerToken });
 
         request.then( ({data}) => {
-            console.log(data);
             setMyLikes(data.posts);
             setRequestReturned(true);
         })

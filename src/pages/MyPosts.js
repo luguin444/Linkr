@@ -23,12 +23,10 @@ export default function MyPosts () {
 
         const request = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v1/linkr/users/${userDataObject.user.id}/posts?offset=0&`, { headers: userDataObject.headerToken });
 
-        // console.log("entrei aq dnvv ");
         setPostDeleted(true);
 
         request.then( ({data}) => {
             setMyPosts(data.posts);
-            // console.log("peguei meus posts:", data.posts);
             setRequestReturned(true);
         })
 
