@@ -38,7 +38,9 @@ const ContainerLogo = styled.div`
     font-weight: 700;
     display: flex;
     flex-direction: column;
-    padding: 15rem 0 0 8rem;
+    justify-content: center;
+
+    padding: 0 0 0 8rem;
 
     h1 {
         font-family: 'Passion One', cursive; 

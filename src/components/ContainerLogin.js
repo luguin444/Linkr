@@ -116,7 +116,9 @@ export default function ContainerLogin () {
 const ContainerGray = styled.div`
     width: 35%;
     background-color: #333;
-    padding: 15rem 0 0 0; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
         @media(max-width: 800px) {
             width: 100%;
