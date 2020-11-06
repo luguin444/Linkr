@@ -69,9 +69,9 @@ export default function User () {
                                 userPosts.map( post =>  <Post post = {post} key = {post.id} /> )
                         }                   
                     </Posts>
-                              
+                    <Trending />            
                 </ContainerPage> 
-                <Trending />           
+          
              </Main>
         </>
     );

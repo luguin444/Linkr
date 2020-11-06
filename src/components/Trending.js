@@ -101,9 +101,9 @@ const BoxTrending = styled.div `
         padding:0.8rem;
         line-height: 1.3rem;
         font-weight: 700;
-        white-space: nowrap;
+        //white-space: nowrap;
         overflow: hidden;
-        text-overflow: ellipsis;
+        //text-overflow: ellipsis;
     }
 
     @media(max-width: 1500px) {
