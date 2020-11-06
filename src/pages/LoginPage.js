@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 
+
 import ContainerLogin from '../components/ContainerLogin'
 
 export default function LoginPage () {   
@@ -37,7 +38,9 @@ const ContainerLogo = styled.div`
     font-weight: 700;
     display: flex;
     flex-direction: column;
-    padding: 15rem 0 0 8rem;
+    justify-content: center;
+
+    padding: 0 0 0 8rem;
 
     h1 {
         font-family: 'Passion One', cursive; 

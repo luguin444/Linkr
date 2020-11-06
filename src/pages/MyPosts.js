@@ -16,15 +16,17 @@ export default function MyPosts () {
     const {userDataObject} = useContext(UserContext);
 
     const [myPosts, setMyPosts] = useState([]);
+    const [postDeleted, setPostDeleted] = useState(false);
     const [requestReturned, setRequestReturned] = useState(false);
 
     useEffect( () => {
 
         const request = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v1/linkr/users/${userDataObject.user.id}/posts?offset=0&`, { headers: userDataObject.headerToken });
 
+        setPostDeleted(true);
+
         request.then( ({data}) => {
             setMyPosts(data.posts);
-            console.log("peguei meus posts:", data.posts);
             setRequestReturned(true);
         })
 
@@ -32,7 +34,7 @@ export default function MyPosts () {
             alert("Houve uma falha em obter os seus posts. Por favor atualize a página");
             setRequestReturned(true);
         });
-    } , []);
+    } , [postDeleted]);
     
     return (
         <>
@@ -50,7 +52,7 @@ export default function MyPosts () {
                                     <SiProbot />
                                     <span>Nenhum Post encontrado</span>
                                 </div> :
-                                myPosts.map( post =>  <Post post = {post} key = {post.id} /> )
+                                myPosts.map( post =>  <Post post = {post} key = {post.id} setPostDeleted = {setPostDeleted} /> )
                         }                    
                     </Posts>
                     <Trending />            

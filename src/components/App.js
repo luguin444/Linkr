@@ -1,4 +1,5 @@
-import React from 'react'
+import React, {useState} from 'react';
+import styled from 'styled-components';
 import { BrowserRouter as Router, Switch, Route} from "react-router-dom";
 
 import LoginPage from '../pages/LoginPage'
@@ -11,7 +12,9 @@ import MyLikes from '../pages/MyLikes'
 import UserContext, {UserProvider} from '../contexts/UserContext'
 
 export default function App () {
-   
+
+ 
+    
     return (
         <UserProvider >
             <Router basename='/Linkr'>
@@ -25,9 +28,13 @@ export default function App () {
                     <Route exact path = "/my-posts">
                         <MyPosts />
                     </Route>
+
+
                     <Route exact path = "/my-likes">
                         <MyLikes />
                     </Route>
+
+
                     <Route exact path = "/timeline">
                         <TimelinePage />
                     </Route>
@@ -35,7 +42,9 @@ export default function App () {
                         <LoginPage />
                     </Route>
                 </Switch>
+          
             </Router>
         </UserProvider>
     );
 }
+

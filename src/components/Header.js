@@ -18,6 +18,8 @@ export default function Header () {
             <Logo> 
                <Link to = "/timeline">linkr</Link> 
             </Logo>
+
+
             <User>
                 {openNavegation ? 
                     <AiOutlineUp onClick = { () => setOpenNavegation(false) } /> :   
@@ -31,17 +33,17 @@ export default function Header () {
 }
 
 const StyledHeader = styled.div `
-    
     position: fixed;
-    right: 0;
     top :0;
+    left: 0;
     width: 100%;
     height: 4.5rem;
     background-color: #151515;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 2rem 0 2rem;  
+    padding: 0 2rem 0 2rem; 
+
 `;
 
 const Logo = styled.div `

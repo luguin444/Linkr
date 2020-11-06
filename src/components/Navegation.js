@@ -8,11 +8,16 @@ export default function Navegation () {
 
     const {setUserDataObject} = useContext(UserContext);
 
+    function logginOut () {
+        localStorage.clear();
+        setUserDataObject({});
+    }
+
     return (
         <StyledNavegation>
             <Link to = "/my-posts"> <div>My posts</div> </Link>
             <Link to = "/my-likes"> <div>My likes</div> </Link>
-            <Link to = "/"> <div onClick = { () => setUserDataObject({})}>Logout</div> </Link> 
+            <Link to = "/"> <div onClick = {logginOut}>Logout</div> </Link> 
         </StyledNavegation>
     );
 }
@@ -33,4 +38,6 @@ const StyledNavegation = styled.div`
     flex-direction: column;
     border-bottom-left-radius: 1rem;
     padding: 1rem;
+    z-index: 5;
+
 `

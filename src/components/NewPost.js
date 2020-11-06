@@ -125,6 +125,7 @@ const Button = styled.button `
     border-radius: 0.3rem;
     border: 0;
     margin-right: 1.3rem;
+    cursor: pointer;
    
     &:focus {
         outline: 0;
@@ -164,6 +165,13 @@ const ContainerPost = styled.div `
 
     @media(max-width: 800px) {
         width: 100%; 
-        margin-left: 0;      
+        margin-left: 0;  
+
+        input {
+            width: 80vw;
+        }    
+        textarea  {
+            width: 80vw;
+        }    
     }
 `;
