@@ -115,6 +115,7 @@ export const Main = styled.div `
     
     @media(max-width: 800px) {
         margin: 4rem 0 0 0;
+        align-items: flex-start;
     }
 `;
 
@@ -155,7 +156,7 @@ export const Posts = styled.div `
         width: 10rem;
         margin: 3rem 13rem;
     }
-    
+
     .NoPosts {
         color: #fff;
         font-size: 2rem;
@@ -177,7 +178,7 @@ export const Posts = styled.div `
 
     @media(max-width: 800px) {
         width: 100%;
-        margin: 0 auto; 
+        margin: 0; 
 
         .loading {
             margin: 3rem 7rem;

@@ -50,6 +50,7 @@ const BoxUser = styled.div `
     li {
         color: #C5C5C5;
         margin-left: 0.8rem;
+        
         span {
             margin-left: -0.8rem;
             list-style-type: disc;
@@ -63,4 +64,6 @@ const BoxUser = styled.div `
         width: 95vw;
         
     }
+
+    
 `;

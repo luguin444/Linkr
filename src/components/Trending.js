@@ -57,11 +57,10 @@ const BoxTrending = styled.div `
     background: black;
     width: 19rem;
     border-radius: 1rem;
-    height: 20rem;
+    height: 21rem;
     position: sticky;
     top: 6rem;
-    right: 6rem;
-    flex-shrink: 0;
+    flex-shrink: 1;
 
     .title {
         color: white;
@@ -93,7 +92,7 @@ const BoxTrending = styled.div `
                 }
         }
     }
-    
+
     .hashtag {
         font-family: 'Lato', sans-serif; 
         color: white;
@@ -104,8 +103,8 @@ const BoxTrending = styled.div `
         font-weight: 700;
     }
 
-    @media(max-width: 800px) {
+    @media(max-width: 1500px) {
         display: none;
     }
-  
+
 `;
