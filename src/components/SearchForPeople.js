@@ -43,7 +43,7 @@ export default function SearchForPeople () {
         <StyledSearchPeople>
             <DebounceInput
                 placeholder="Search for people and friends" 
-                minLength={2}
+                minLength={3}
                 debounceTimeout={300}
                 value = {inputPeople} 
                 onChange={event => setInputPeople(event.target.value)}             
@@ -63,6 +63,7 @@ const StyledSearchPeople = styled.div `
         position: fixed;
         top: 1rem;
         left: 30%;
+
     input {
         height: 2.5rem;
         width: 35rem;
@@ -89,22 +90,21 @@ const StyledSearchPeople = styled.div `
     @media(max-width: 800px) {
             top: 5rem;
             left: 0;
-            right: 0.3rem;
-            width: 70%;
-            padding-left: 0;
+            right: 0;
+            width: 100%;
+            padding: 0;
             
-
+            
             input {
-                margin-left: 0.7rem;
-                width: 95vw;
-
-
+                width: 99vw;
+                
             }
 
         }
 `;
 
 const ContainerSearchResponse = styled.div `
+
     width: 35rem;
     background: #E7E7E7;
     padding-top: 1.6rem;
@@ -117,8 +117,13 @@ const ContainerSearchResponse = styled.div `
     @media(max-width: 800px) {
         top: 0.6rem;
         left: 0;
-        width: 95vw;
-        margin-left: 0.7rem;
+        width: 93vw;
+        margin-left: 1rem;
 
+    }
+
+    @media(max-width: 600px) {
+        width: 90vw;
+        
     }
 `;

@@ -16,12 +16,16 @@ import UserContext from '../contexts/UserContext';
 export default function User () {
 
     const {userDataObject} = useContext(UserContext);
+    const {user}  = userDataObject;
+    const {username}  = user;
+    console.log(username);
     
     const {id} = useParams();
 
     const [userPosts, setUserPosts] = useState([]);
     const [requestReturned, setRequestReturned] = useState(false);
     const [userName, setUserName] = useState(" ");
+    const [checkName, setCheckName] = useState(" ");
 
 
     useEffect( () => {
@@ -56,8 +60,7 @@ export default function User () {
             <Main>
                 <UserName>
                     { userName }'s posts: 
-
-                    <ButtonFollow />
+                     <ButtonFollow />
                 </UserName>
                 <ContainerPage> 
                     <Posts> 
@@ -71,15 +74,16 @@ export default function User () {
                                 userPosts.map( post =>  <Post post = {post} key = {post.id} /> )
                         }                   
                     </Posts>
-                    <Trending />            
-                </ContainerPage>          
+                              
+                </ContainerPage> 
+                <Trending />           
              </Main>
         </>
     );
 }
 
 const UserName = styled.h2 `
-    width: 100%;
+    width: 55vw;
     color: white;
     font-family: 'Oswald', sans-serif;
     font-size: 2.5rem;
