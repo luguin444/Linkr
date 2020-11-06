@@ -2,7 +2,6 @@ import React, {useContext, useEffect, useState} from 'react'
 import styled from 'styled-components'
 import axios from 'axios'
 import { Link, useHistory } from "react-router-dom";
-import { CgSearch } from "react-icons/cg";
 
 import UserContext from '../contexts/UserContext';
 
@@ -33,6 +32,7 @@ export default function Trending () {
             alert("Houve uma falha em obter as hashtags. Por favor atualize a página");
         });
     } , []);
+
     
     return (
         <BoxTrending>
@@ -55,12 +55,14 @@ export default function Trending () {
 
 const BoxTrending = styled.div ` 
     background: black;
-    width: 19.8rem;
+    width: 19rem;
     border-radius: 1rem;
     height: 20rem;
-    margin: 0.03rem 1rem 0 0.5rem;
-    z-index: -1;
- 
+    position: sticky;
+    top: 6rem;
+    right: 6rem;
+    flex-shrink: 0;
+
     .title {
         color: white;
         font-family: 'Oswald', sans-serif;
@@ -88,9 +90,10 @@ const BoxTrending = styled.div `
 
                 &:focus {
                 outline:0;
-            }
+                }
         }
     }
+    
     .hashtag {
         font-family: 'Lato', sans-serif; 
         color: white;

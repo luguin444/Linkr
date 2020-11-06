@@ -97,7 +97,9 @@ export default function TimelinePage () {
                                 />)
                         }                   
                     </Posts>
-                    <Trending />              
+
+                    <Trending />  
+
                 </ContainerPage>          
             </Main>
         </>
@@ -105,10 +107,10 @@ export default function TimelinePage () {
 }
 
 export const Main = styled.div ` 
-    width: 60%;
-    margin: auto;
+    width: 100%;
     display: flex;
     flex-direction: column;
+    align-items: center;
     margin-top: 5rem;
     
     @media(max-width: 800px) {
@@ -117,13 +119,13 @@ export const Main = styled.div `
 `;
 
 export const Title = styled.h1` 
-    width: 100%;
+    width: 53vw;
     color: white;
     font-family: 'Oswald', sans-serif;
     font-size: 2.5rem;
     line-height: 5rem;
     display: flex;
-    justify-content: space-between;
+    justify-content:flex-start;
     align-items: center;
 
     @media(max-width: 800px) {
@@ -139,18 +141,21 @@ export const Title = styled.h1`
 `;
 
 export const ContainerPage = styled.div` 
-    width: 100%;
+    width: 53vw;
     display: flex;
+    justify-content: space-around;
+    flex-grow: 1;
 `;
 
 export const Posts = styled.div ` 
     width: 70%; 
+    flex-shrink: 0;
 
     .loading {
         width: 10rem;
         margin: 3rem 13rem;
-
     }
+    
     .NoPosts {
         color: #fff;
         font-size: 2rem;

@@ -71,15 +71,16 @@ export default function User () {
                                 userPosts.map( post =>  <Post post = {post} key = {post.id} /> )
                         }                   
                     </Posts>
-                    <Trending />            
-                </ContainerPage>          
+                              
+                </ContainerPage> 
+                <Trending />           
              </Main>
         </>
     );
 }
 
 const UserName = styled.h2 `
-    width: 100%;
+    width: 55vw;
     color: white;
     font-family: 'Oswald', sans-serif;
     font-size: 2.5rem;
