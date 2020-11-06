@@ -11,20 +11,16 @@ import ButtonFollow from '../components/ButtonFollow';
 
 import UserContext from '../contexts/UserContext';
 
-
-
 export default function User () {
 
     const {userDataObject} = useContext(UserContext);
     const {user}  = userDataObject;
-    const {username}  = user;
-    console.log(username);
     
     const {id} = useParams();
 
     const [userPosts, setUserPosts] = useState([]);
     const [requestReturned, setRequestReturned] = useState(false);
-    const [userName, setUserName] = useState(" ");
+    const [name, setUserName] = useState(" ");
     const [checkName, setCheckName] = useState(" ");
 
 
@@ -53,14 +49,13 @@ export default function User () {
         });
     } , []);
 
-
     return (
         <>
             <Header />
             <Main>
                 <UserName>
-                    { userName }'s posts: 
-                     <ButtonFollow />
+                    { name }'s posts: 
+                    { user.id !== parseInt(id) ? <ButtonFollow /> : ''} 
                 </UserName>
                 <ContainerPage> 
                     <Posts> 

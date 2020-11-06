@@ -34,7 +34,7 @@ export default function Post (props) {
         }    
       };
 
-    const {post, setPostDeleted, setPostEdited} = props;
+    const {post, setPostDeleted, setPostEdited, from} = props;
     const { link } = post;
     
     const history = useHistory();
@@ -155,7 +155,7 @@ export default function Post (props) {
 
         userNamesLiked = haveILikedOrDisliked ? likesFromPost.map(item => item.username) : post.likes.map(item => item['user.username']);
         
-        if (likesFromPost === "myLikes") {
+        if (from === "myLikes") {
             userNamesLiked = post.likes.map(item => item.username);
         }
 

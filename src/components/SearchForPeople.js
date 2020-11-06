@@ -48,9 +48,11 @@ export default function SearchForPeople () {
                 value = {inputPeople} 
                 onChange={event => setInputPeople(event.target.value)}             
              /> 
-            <ContainerSearchResponse>
-                {searchUsers.map(user => <SearchResponse user={user} key={user.id} /> )}
-            </ContainerSearchResponse>
+           {(inputPeople.length === 0) ? '' : 
+                <ContainerSearchResponse>
+                        {searchUsers.map(user => <SearchResponse user={user} key={user.id} /> )}
+                 </ContainerSearchResponse>
+            } 
         </StyledSearchPeople>
 
     )
@@ -61,7 +63,7 @@ const StyledSearchPeople = styled.div `
         display:flex;
         align-items: center;
         position: fixed;
-        top: 1rem;
+        top: 0.6rem;
         left: 30%;
 
     input {
@@ -112,7 +114,7 @@ const ContainerSearchResponse = styled.div `
     position: absolute;
     top: 1.5rem;
     left: 1rem;
-    z-index: -1;
+    z-index: 10;
 
     @media(max-width: 800px) {
         top: 0.6rem;
@@ -123,7 +125,6 @@ const ContainerSearchResponse = styled.div `
     }
 
     @media(max-width: 600px) {
-        width: 90vw;
-        
+        width: 90vw;      
     }
 `;

@@ -38,5 +38,6 @@ const StyledNavegation = styled.div`
     flex-direction: column;
     border-bottom-left-radius: 1rem;
     padding: 1rem;
+    z-index: 5;
 
 `
