@@ -17,7 +17,7 @@ import UserContext from '../contexts/UserContext';
 
 export default function TimelinePage () {
 
-    const {userDataObject} = useContext(UserContext);
+    const {userDataObject, setUserDataObject} = useContext(UserContext);
 
     const [postsTimeline, setPostsTimeline] = useState([]);
     const [usersFollowed, setUsersFollowed] = useState([]);
@@ -26,29 +26,30 @@ export default function TimelinePage () {
     const [postEdited, setPostEdited] = useState(false);
     const [requestReturned, setRequestReturned] = useState(false);
     
-    useEffect(RequestPostFromFollowers,[]);
+  
+    useEffect(RequestPostFromFollowers,[newpostsOcurred, postDeleted,postEdited]);
 
     useEffect( () => {
         const interval = setInterval(RequestPostFromFollowers, 15000);
-
         return () => clearInterval(interval);    //apaga o intervalo ao sair da Timeline page  (unmount component)
-    } , [newpostsOcurred, postDeleted,postEdited]);
+    } , []);
 
     function RequestPostFromFollowers () {
+
         const request = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v1/linkr/following/posts",{headers: userDataObject.headerToken });
             
-            setNewpostsOcurred(false);
-            setPostDeleted(false);
-            setPostEdited(false);
+        setNewpostsOcurred(false);
+        setPostDeleted(false);
+        setPostEdited(false);
 
-            request.then( ({data}) => {
-                setPostsTimeline(data.posts);
-                setRequestReturned(true);
-            })
-            request.catch( ({data}) => {
-                alert("Houve uma falha em obter os posts. Por favor atualize a página");
-                setRequestReturned(true);
-            });
+        request.then( ({data}) => {
+            setPostsTimeline(data.posts);
+            setRequestReturned(true);
+        })
+        request.catch( ({data}) => {
+            alert("Houve uma falha em obter os posts. Por favor atualize a página");
+            setRequestReturned(true);
+        });
     }
 
     useEffect( () => {
@@ -63,44 +64,42 @@ export default function TimelinePage () {
         });
     } , []);
 
-    //console.log("peguei os posts", postsTimeline);
-
     return (
         <>
-        <Header />
-         
-        <SearchForPeople />
-       
-        <Main>
-            <Title>
-                timeline 
-            </Title>
-            <ContainerPage> 
-                <Posts> 
-                    <NewPost setNewpostsOcurred={setNewpostsOcurred} />
-                    {requestReturned === false ? 
-                        <img  src = "/images/loading3.gif" className = "loading" /> :
-                        (usersFollowed.length === 0) ?
-                        <div className = "NoPosts"> 
-                            <span>Você não segue ninguém ainda, procure por perfis na busca</span>
-                        </div> :
-                        (postsTimeline.length === 0) ?
-                        <div className = "NoPosts"> 
-                            <SiProbot />
-                            <span>Nenhum Publicação encontrada</span>
-                        </div> :
-                        postsTimeline.map( post => 
-                             <Post 
-                                post = {post} 
-                                key = {post.id} 
-                                setPostDeleted = {setPostDeleted} 
-                                setPostEdited = {setPostEdited}
-                            />)
-                    }                   
-                </Posts>
-                <Trending />              
-            </ContainerPage>          
-        </Main>
+            <Header />
+            
+            <SearchForPeople />
+        
+            <Main>
+                <Title>
+                    timeline 
+                </Title>
+                <ContainerPage> 
+                    <Posts> 
+                        <NewPost setNewpostsOcurred={setNewpostsOcurred} />
+                        {requestReturned === false ? 
+                            <img  src = "/images/loading3.gif" className = "loading" /> :
+                            (usersFollowed.length === 0) ?
+                            <div className = "NoPosts"> 
+                                <span>Você não segue ninguém ainda, procure por perfis na busca</span>
+                            </div> :
+                            (postsTimeline.length === 0) ?
+                            <div className = "NoPosts"> 
+                                <SiProbot />
+                                <span>Nenhum Publicação encontrada</span>
+                            </div> :
+                            postsTimeline.map( post => 
+                                <Post 
+                                    post = {post} 
+                                    key = {post.id} 
+                                    setPostDeleted = {setPostDeleted} 
+                                    setPostEdited = {setPostEdited}
+                                />)
+                        }                   
+                    </Posts>
+                    <Trending />              
+                </ContainerPage>          
+            </Main>
         </>
     );
 }

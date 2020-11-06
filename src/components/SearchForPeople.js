@@ -19,13 +19,15 @@ export default function SearchForPeople () {
 
 
     useEffect( () => {
-        const request = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v1/linkr/users/search?username=${inputPeople}`, { headers: userDataObject.headerToken });
+        if(inputPeople.length !== 0) {
+            const request = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v1/linkr/users/search?username=${inputPeople}`, { headers: userDataObject.headerToken });
 
-        request.then(response => {
-            setSearchUsers(response.data.users);    
-            followersFirst(response.data.users);
-
-        })
+            request.then(response => {
+                setSearchUsers(response.data.users);    
+                followersFirst(response.data.users);
+            })
+        }
+        
     } , [inputPeople]);
 
 

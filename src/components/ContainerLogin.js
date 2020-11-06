@@ -1,4 +1,4 @@
-import React, {useState, useContext} from 'react'
+import React, {useState, useContext, useEffect} from 'react'
 import axios from 'axios'
 import styled from 'styled-components'
 import { useHistory} from "react-router-dom";
@@ -10,7 +10,7 @@ import UserContext from '../contexts/UserContext'
 
 export default function ContainerLogin () {
 
-    const {setUserDataObject} = useContext(UserContext);
+    const {userDataObject, setUserDataObject} = useContext(UserContext);
 
     const [buttonAviability, setButtonAviability] = useState(true);
     const [registered, setRegistered] = useState(true);
@@ -20,7 +20,8 @@ export default function ContainerLogin () {
     const [imageURL, setImageURL] = useState('');
 
     const history = useHistory();
-    
+
+            
     function sendDataToServer() {
 
         if (registered) {
@@ -45,6 +46,7 @@ export default function ContainerLogin () {
     
                 request.then( ({data}) => {
                     setUserDataObject ({ 'headerToken': {'User-Token': data.token}, 'user': data.user});
+                    localStorage.setItem('@user', JSON.stringify({ 'headerToken': {'User-Token': data.token}, 'user': data.user}));
                     setButtonAviability(true);
                     history.push('/timeline');
                 })
@@ -75,6 +77,7 @@ export default function ContainerLogin () {
 
             request.then( ({data}) => {
                 setUserDataObject ({ 'headerToken': {'User-Token': data.token}, 'user': data.user});
+                localStorage.setItem('@user', JSON.stringify({ 'headerToken': {'User-Token': data.token}, 'user': data.user}));
                 history.push('/timeline');
 
             })
@@ -99,8 +102,12 @@ export default function ContainerLogin () {
                         <Input placeholder = "picture url" value = {imageURL} onChange = { (event) => setImageURL(event.target.value)} />
                     </>
                 }
-                <ButtonLogin onClick = { () => sendDataToServer()}> {registered ? "Log in" : "Sign up"} </ButtonLogin>
-                <span onClick = { () => setRegistered(!registered)}> {registered ? "First time ? Create an account!" : "Switch back to log in"} </span>
+                <ButtonLogin onClick = { () => sendDataToServer()} disabled = {!buttonAviability}> 
+                    {registered ? "Log in" : "Sign up"} 
+                </ButtonLogin>
+                <span onClick = { () => setRegistered(!registered)} > 
+                    {registered ? "First time ? Create an account!" : "Switch back to log in"} 
+                </span>
             </StyledContainerLogin>
          </ContainerGray>
     );
@@ -148,4 +155,5 @@ const ButtonLogin = styled.button`
     align-items: center;
     justify-content: center;
     font-size: 2rem;
+    cursor: pointer;
 `;
