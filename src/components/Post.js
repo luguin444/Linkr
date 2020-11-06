@@ -52,7 +52,7 @@ export default function Post (props) {
     const [postMainDescription, setPostMainDescription] = useState(post.text);
     const [onSendingPostEdition, setOnSendingPostEdition] = useState(false);
     
-    //layput do player embedded do YouTube
+    //layout do player embedded do YouTube
     const opts = {
         height: "390",
         width: "490",
@@ -257,7 +257,7 @@ export default function Post (props) {
                 
                 {getYouTubeID( link ) 
                     ? <div className="player">
-                        <YouTube videoId={getYouTubeID( link )} opts={opts}  /> 
+                        <YouTube className="video" videoId={getYouTubeID( link )} opts={opts}  /> 
                         <span onClick={() => openInNewTab( `${ link }`)}> {link} </span>
                       </div>
 
@@ -438,7 +438,12 @@ const PostData = styled.div `
         .description {
             font-size: 1rem;
             line-height: 1.1rem;
-        }      
+        }  
+
+        .video {
+            width: 100%;
+            height: 90%;
+        }    
         .link {
             width: 100%;
 
