@@ -98,4 +98,10 @@ const StyledButtonFollow = styled.button `
     &:focus {
         outline: 0;
     }
+
+    @media(max-width: 800px) {
+        margin-top: 1rem;
+        width: 4.7rem;
+        height: 1.7rem;
+    }
 `;

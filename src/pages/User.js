@@ -2,7 +2,7 @@ import React, {useState, useContext, useEffect} from 'react'
 import axios from 'axios'
 import {SiProbot} from "react-icons/si";
 import {useParams} from "react-router-dom";
-
+import styled from 'styled-components';
 import Header from '../components/Header';
 import Trending from '../components/Trending';
 import Post from '../components/Post';
@@ -29,7 +29,6 @@ export default function User () {
         const request = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v1/linkr/users/${id}`, { headers: userDataObject.headerToken });
 
         request.then( ({data}) => {
-            console.log(data.user.username);
             setUserName(data.user.username);
         })
         
@@ -55,11 +54,11 @@ export default function User () {
         <>
             <Header />
             <Main>
-                <Title>
+                <UserName>
                     { userName }'s posts: 
 
                     <ButtonFollow />
-                </Title>
+                </UserName>
                 <ContainerPage> 
                     <Posts> 
                         { requestReturned === false ? 
@@ -78,3 +77,26 @@ export default function User () {
         </>
     );
 }
+
+const UserName = styled.h2 `
+    width: 100%;
+    color: white;
+    font-family: 'Oswald', sans-serif;
+    font-size: 2.5rem;
+    line-height: 5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    @media(max-width: 800px) {
+        width: 100vw;
+        display: flex;
+        margin: 1rem;
+        line-height: 2.1rem;
+        flex-direction: column;
+        align-items: flex-start;
+        font-size: 1.5rem;
+    
+    }
+
+`;
