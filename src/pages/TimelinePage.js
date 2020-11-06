@@ -2,9 +2,7 @@ import React, {useContext, useEffect, useState} from 'react'
 import axios from 'axios'
 import styled from 'styled-components'
 import { SiProbot} from "react-icons/si";
-import Modal from 'react-modal';
-
-//Modal.setAppElement('#root');
+import InfiniteScroll from 'react-infinite-scroller'
 
 import Header from '../components/Header';
 import NewPost from '../components/NewPost';
@@ -25,31 +23,61 @@ export default function TimelinePage () {
     const [postDeleted, setPostDeleted] = useState(false);
     const [postEdited, setPostEdited] = useState(false);
     const [requestReturned, setRequestReturned] = useState(false);
+    const [timesScrolled, setTimesScrolled] = useState(10);
     
   
-    useEffect(RequestPostFromFollowers,[newpostsOcurred, postDeleted,postEdited]);
+    useEffect(requestPostFromFollowersPeriodically,[newpostsOcurred, postDeleted,postEdited]);
 
     useEffect( () => {
-        const interval = setInterval(RequestPostFromFollowers, 15000);
+        const interval = setInterval(requestPostFromFollowersPeriodically, 15000);
         return () => clearInterval(interval);    //apaga o intervalo ao sair da Timeline page  (unmount component)
     } , []);
 
-    function RequestPostFromFollowers () {
+    function requestPostFromFollowersPeriodically () {
 
-        const request = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v1/linkr/following/posts",{headers: userDataObject.headerToken });
+        const request = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v1/linkr/following/posts?limit=10`,{headers: userDataObject.headerToken });
             
         setNewpostsOcurred(false);
         setPostDeleted(false);
         setPostEdited(false);
 
         request.then( ({data}) => {
-            setPostsTimeline(data.posts);
+            let newPostsVector = data.posts;
+            newPostsVector = newPostsVector.filter(p => !(postsTimeline.find( oldPost => oldPost.id === p.id)) );
+            setPostsTimeline([...postsTimeline, ...newPostsVector]);
             setRequestReturned(true);
         })
         request.catch( ({data}) => {
             alert("Houve uma falha em obter os posts. Por favor atualize a página");
             setRequestReturned(true);
         });
+    }
+
+    function requestPostFromFollowersScroll () {
+
+        const request = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v1/linkr/following/posts?limit=10&offset=${timesScrolled}`,{headers: userDataObject.headerToken });
+
+            
+        setNewpostsOcurred(false);
+        setPostDeleted(false);
+        setPostEdited(false);
+
+        request.then( ({data}) => {
+            let newPostsVector = data.posts;
+            setPostsTimeline([...postsTimeline, ...newPostsVector]);
+            setRequestReturned(true);     
+            setTimesScrolled(timesScrolled+10);
+
+        })
+        request.catch( ({data}) => {
+            alert("Houve uma falha em obter os posts. Por favor atualize a página");
+            setRequestReturned(true);
+        });
+    }
+
+    function scrollPage() {
+        console.log("entrei");
+        requestPostFromFollowersScroll();
     }
 
     useEffect( () => {
@@ -71,7 +99,7 @@ export default function TimelinePage () {
             <SearchForPeople />
         
             <Main>
-                <Title>
+                <Title >
                     timeline 
                 </Title>
                 <ContainerPage> 
@@ -88,13 +116,21 @@ export default function TimelinePage () {
                                 <SiProbot />
                                 <span>Nenhum Publicação encontrada</span>
                             </div> :
-                            postsTimeline.map( post => 
-                                <Post 
-                                    post = {post} 
-                                    key = {post.id} 
-                                    setPostDeleted = {setPostDeleted} 
-                                    setPostEdited = {setPostEdited}
-                                />)
+                            <InfiniteScroll
+                                pageStart={0}
+                                loadMore={scrollPage}
+                                hasMore={true}
+                                loader={<img  src = "/images/loading3.gif" className = "loading" />}
+                                //useWindow={false}
+                            >
+                               { postsTimeline.map( post => 
+                                    <Post 
+                                        post = {post} 
+                                        key = {post.id} 
+                                        setPostDeleted = {setPostDeleted} 
+                                        setPostEdited = {setPostEdited}
+                                    />)}
+                            </InfiniteScroll>
                         }                   
                     </Posts>
                     <Trending />              
