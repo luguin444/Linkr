@@ -175,7 +175,6 @@ export const ContainerPage = styled.div`
     width: 53vw;
     display: flex;
     justify-content: space-around;
-    flex-grow: 1;
 `;
 
 export const Posts = styled.div ` 
