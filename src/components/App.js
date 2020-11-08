@@ -1,5 +1,4 @@
-import React, {useState} from 'react';
-import styled from 'styled-components';
+import React from 'react';
 import { BrowserRouter as Router, Switch, Route} from "react-router-dom";
 
 import LoginPage from '../pages/LoginPage'
@@ -9,43 +8,22 @@ import Hashtags from '../pages/Hashtags'
 import User from '../pages/User'
 import MyLikes from '../pages/MyLikes'
 
-import UserContext, {UserProvider} from '../contexts/UserContext'
+import {UserProvider} from '../contexts/UserContext'
 
 export default function App () {
-
- 
-    
+  
     return (
         <UserProvider >
             <Router>
-
                 <Switch>
-                    <Route exact path = "/hashtag/:hashtag">
-                        <Hashtags />
-                    </Route>
-                    <Route exact path = "/user/:id">
-                        <User />
-                    </Route>
-                    <Route exact path = "/my-posts">
-                        <MyPosts />
-                    </Route>
-
-
-                    <Route exact path = "/my-likes">
-                        <MyLikes />
-                    </Route>
-
-
-                    <Route exact path = "/timeline">
-                        <TimelinePage />
-                    </Route>
-                    <Route exact path = "/">
-                        <LoginPage />
-                    </Route>
+                    <Route exact path = "/user/:id" component = {User} />
+                    <Route exact path = "/hashtag/:hashtag" component = {Hashtags} />
+                    <Route exact path = "/my-posts" component = {MyPosts} />
+                    <Route exact path = "/my-likes" component = {MyLikes} />
+                    <Route exact path = "/timeline" component = {TimelinePage} /> 
+                    <Route exact path = "/" component = {LoginPage} />                
                 </Switch>
-          
             </Router>
         </UserProvider>
     );
 }
-

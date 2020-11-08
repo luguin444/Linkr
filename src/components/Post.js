@@ -14,7 +14,6 @@ import YouTube from "react-youtube";
 import { Photo } from './NewPost';
 
 import UserContext from '../contexts/UserContext';
-import { AiOutlineRadiusBottomleft } from 'react-icons/ai';
 import ModalContent from './ModalContent';
 
 export default function Post (props) {
@@ -196,7 +195,6 @@ export default function Post (props) {
                 }
                 <>
                     <span 
-                        //onClick = {() => userWhoLiked()}
                         data-tip = {userWhoLiked()}
                         onMouseOver = { () => {ReactTooltip.show()}}  
                     >
@@ -252,9 +250,7 @@ export default function Post (props) {
                             {post.text}
                         </ReactHashtag> 
                     </div>  
-                }
-                         
-                
+                }                
                 {getYouTubeID( link ) 
                     ? <div className="player">
                         <YouTube className="video" videoId={getYouTubeID( link )} opts={opts}  /> 

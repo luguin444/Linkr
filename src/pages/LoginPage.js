@@ -1,22 +1,19 @@
 import React from 'react'
 import styled from 'styled-components'
 
-
 import ContainerLogin from '../components/ContainerLogin'
 
 export default function LoginPage () {   
     return (
-        <>
-            <ContainerAll>
-                <ContainerLogo> 
-                    <h1>linkr</h1>
-                    <p> 
-                        save, share and discover <br /> the best links on the web
-                    </p>
-                </ContainerLogo>
-                <ContainerLogin />
-            </ContainerAll>
-        </>
+        <ContainerAll>
+            <ContainerLogo> 
+                <h1>linkr</h1>
+                <p> 
+                    save, share and discover <br /> the best links on the web
+                </p>
+            </ContainerLogo>
+            <ContainerLogin />
+        </ContainerAll>
     );
 }
 
@@ -29,7 +26,6 @@ const ContainerAll = styled.div`
         flex-direction: column;
     }  
 `
-
 const ContainerLogo = styled.div`
     width: 65%;
     height: 100vh;

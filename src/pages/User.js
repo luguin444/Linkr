@@ -21,8 +21,6 @@ export default function User () {
     const [userPosts, setUserPosts] = useState([]);
     const [requestReturned, setRequestReturned] = useState(false);
     const [name, setUserName] = useState(" ");
-    const [checkName, setCheckName] = useState(" ");
-
 
     useEffect( () => {
 
@@ -30,11 +28,9 @@ export default function User () {
 
         request.then( ({data}) => {
             setUserName(data.user.username);
-        })
-        
+        })     
     } , []);
     
-
     useEffect( () => {
 
         const request = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v1/linkr/users/${id}/posts?offset=0&`, { headers: userDataObject.headerToken });
@@ -70,9 +66,8 @@ export default function User () {
                         }                   
                     </Posts>
                     <Trending />            
-                </ContainerPage> 
-          
-             </Main>
+                </ContainerPage>          
+            </Main>
         </>
     );
 }
@@ -94,8 +89,6 @@ const UserName = styled.h2 `
         line-height: 2.1rem;
         flex-direction: column;
         align-items: flex-start;
-        font-size: 1.5rem;
-    
+        font-size: 1.5rem;    
     }
-
 `;

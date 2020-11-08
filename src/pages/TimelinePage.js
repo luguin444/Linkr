@@ -26,6 +26,18 @@ export default function TimelinePage () {
     const [timesScrolled, setTimesScrolled] = useState(10);
     
   
+    useEffect( () => {
+
+        const request = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v1/linkr/users/follows", { headers: userDataObject.headerToken });
+
+        request.then( ({data}) => {
+            setUsersFollowed(data.users);
+        })
+        request.catch( ({data}) => {
+            alert("Houve uma falha em obter os seus seguidores. Por favor atualize a página");
+        });
+    } , []);
+
     useEffect(() => requestPostFromFollowersPeriodically(true),[newpostsOcurred, postDeleted,postEdited]);
 
     useEffect( () => {
@@ -57,7 +69,6 @@ export default function TimelinePage () {
             setRequestReturned(true);
         });
     }
-
     function requestPostFromFollowersScroll () {
 
         const request = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v1/linkr/following/posts?limit=10&offset=${timesScrolled}`,{headers: userDataObject.headerToken });
@@ -79,25 +90,11 @@ export default function TimelinePage () {
         });
     }
 
-
-    useEffect( () => {
-
-        const request = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v1/linkr/users/follows", { headers: userDataObject.headerToken });
-
-        request.then( ({data}) => {
-            setUsersFollowed(data.users);
-        })
-        request.catch( ({data}) => {
-            alert("Houve uma falha em obter os seus seguidores. Por favor atualize a página");
-        });
-    } , []);
-
+    
     return (
         <>
-            <Header />
-            
-            <SearchForPeople />
-        
+            <Header />           
+            <SearchForPeople />       
             <Main>
                 <Title >
                     timeline 
@@ -132,9 +129,7 @@ export default function TimelinePage () {
                             </InfiniteScroll>
                         }                   
                     </Posts>
-
                     <Trending />  
-
                 </ContainerPage>          
             </Main>
         </>
