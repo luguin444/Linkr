@@ -29,4 +29,4 @@
     ** Layout **: link FIGMA https://www.figma.com/file/PzDjhf1EyeZ0opdDnhLmwJ/linkr?node-id=0%3A1 
 
         - Cores e fontes;
-        - Aproximação das posições relativas;
+        - Aproximação das posições e tamanhos;
