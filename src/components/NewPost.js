@@ -31,7 +31,6 @@ export default function NewPost (props) {
         const request = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v1/linkr/posts",PostObject, { headers: userDataObject.headerToken });
 
         request.then( (response) => {
-            console.log(response);
             setIsPublishing(false);
             setLink('');
             setDescription('');

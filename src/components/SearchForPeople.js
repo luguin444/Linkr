@@ -115,6 +115,7 @@ const ContainerSearchResponse = styled.div `
     top: 1.5rem;
     left: 1rem;
     z-index: 10;
+    margin-top: 1.6rem;
 
     @media(max-width: 800px) {
         top: 0.6rem;
