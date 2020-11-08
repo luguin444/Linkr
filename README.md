@@ -11,14 +11,14 @@
             2) Tela de timeline, aonde fica os posts daqueles que você segue e os seus próprios posts. Recurso de carregamento dinâmico com Infinit-Scroll
             3) Tela de usuários, onde se ver os post publicados apenas por ele;
             4) Tela de Hashtags: aonde se vê todos os posts daquela hashtag
-            5) Tela My Post para ver os seus posts;
-            6) Tela My likes aonde se vê os links que você curtiu;
+            5) Tela My-Post para ver os seus próprios posts;
+            6) Tela My-Likes para ver as postagens que você curtiu;
 
         ** Features **
 
             1) Cadastramento e Log in de usuários;
             2) Possibilidade de postar links;
-            3) Possibilidade de conteúdos por hashtags através de click ou busca;
+            3) Possibilidade de acesso a conteúdos filtrados por hashtags através de click ou busca;
             4) Possibilidade de visitar o perfil de usuários através de click ou busca;
             4) Possibilidade de seguir ou não usuários;
             5) Possibilidade de curtir ou não conteúdos;
