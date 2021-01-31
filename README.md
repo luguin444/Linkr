@@ -1,32 +1,46 @@
 # Linkr
 
-    ** Link da Aplicação - Deploy ** : https://luguin444.github.io/Linkr/
+Linkr, um app **React** que é uma rede social para compartilhamentos de links 
 
-    ** Link Repositório Github ** : https://github.com/luguin444/Linkr/
+DEMO: https://luguin444.github.io/Linkr/
 
-    ** Descrição ** : Linkr consiste de uma rede social para compartilhamento de links entre os estudantes do Bootcamp Responde Aí. Foi desenvolvida utilizando o React como framework e o git para versionamento.
+LAYOUT Base Figma: https://www.figma.com/file/PzDjhf1EyeZ0opdDnhLmwJ/linkr?node-id=0%3A1 
 
-        ** Telas **
-            1) Sign In e Sign Up
-            2) Tela de timeline, aonde fica os posts daqueles que você segue e os seus próprios posts. Recurso de carregamento dinâmico com Infinit-Scroll
-            3) Tela de usuários, onde se ver os post publicados apenas por ele;
-            4) Tela de Hashtags: aonde se vê todos os posts daquela hashtag
-            5) Tela My-Post para ver os seus próprios posts;
-            6) Tela My-Likes para ver as postagens que você curtiu;
+## Features
 
-        ** Features **
+✅ Cadastramento e Log in de usuários;
 
-            1) Cadastramento e Log in de usuários;
-            2) Possibilidade de postar links;
-            3) Possibilidade de acesso a conteúdos filtrados por hashtags através de click ou busca;
-            4) Possibilidade de visitar o perfil de usuários através de click ou busca;
-            4) Possibilidade de seguir ou não usuários;
-            5) Possibilidade de curtir ou não conteúdos;
-            6) Possibilidade de apagar e editar seus próprios posts;
-            7) Persistência de Log in em caso de atualizar a página;
-            8) Ver videos no youtube na própria página;
+✅ Possibilidade de postar links;
 
-    ** Layout **: link FIGMA https://www.figma.com/file/PzDjhf1EyeZ0opdDnhLmwJ/linkr?node-id=0%3A1 
+✅ Possibilidade de acesso a conteúdos filtrados por hashtags através de click ou busca;
 
-        - Cores e fontes;
-        - Aproximação das posições e tamanhos;
+✅ Possibilidade de visitar o perfil de usuários através de click ou busca;
+
+✅ Possibilidade de postar links;
+
+✅ Possibilidade de seguir ou não usuários;
+
+✅ Possibilidade de curtir ou não conteúdos;
+
+✅ Possibilidade de apagar e editar seus próprios posts;
+
+✅ Persistência de Log in em caso de atualizar a página;
+
+✅ Ver videos no youtube na própria página;
+
+
+## Como rodar o projeto?
+
+1. Instale o NodeJS [https://nodejs.org/en/](https://nodejs.org/en/)
+2. Clone o projeto
+3. Instale as dependências
+
+    ```bash
+    npm i
+    ```
+
+4. Rode a aplicação 🙂
+
+    ```bash
+    npx webpack serve
+    ```
